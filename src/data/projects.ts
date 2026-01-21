@@ -34,11 +34,11 @@ export const projects: Project[] = [
         image: "/projects/snake.png"
     },
     {
-        id: "2",
-        title: "AI Semantic Search",
-        description: "A search engine that understands context using vector embeddings to provide more relevant search results.",
-        tech: ["Python", "FastAPI", "OpenAI", "Pinecone"],
-        github: "https://github.com/abara02",
-        image: "/projects/search.png"
+        id: "new-project",
+        title: "Project Title",
+        description: "Project Description goes here.",
+        tech: ["Tech 1", "Tech 2"],
+        link: "",
+        image: ""
     }
 ];

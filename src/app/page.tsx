@@ -73,28 +73,16 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 mt-16 items-center">
               <div className="lg:col-span-3 space-y-8 text-xl text-secondary leading-relaxed">
                 <p>
-                  I&apos;m a Software Engineer with strong full-stack experience and a focus on building practical,
-                  user-centered applications. I enjoy working across the stack&mdash;from backend logic and
-                  system design to frontend interfaces&mdash;while keeping usability and real-world impact
-                  at the center of my work.
+                  I’m a Software Engineer who enjoys turning real-world problems into clean, intuitive software. My work spans the full stack—from backend logic and APIs to frontend interfaces—always with a focus on usability, clarity, and real impact.
                 </p>
                 <p>
-                  I hold a Bachelor&apos;s degree in Computer Science and have hands-on experience building web and
-                  mobile applications using Java, Python, C, and TypeScript, with modern frameworks including
-                  React and Next.js. My background includes object-oriented programming, data structures,
-                  APIs, and systems-level concepts.
+                  I earned my Bachelor’s degree in Computer Science and have built web and mobile applications using Java, Python, C, and TypeScript, with frameworks like React and Next.js. My foundation includes object-oriented programming, data structures, systems-level concepts, and modern frontend development.
                 </p>
                 <p>
-                  I specialize in translating real workflows into intuitive, functional software. This includes
-                  building a volleyball rotation tracker web application to solve a real coaching challenge
-                  I encountered, as well as contributing UI/UX improvements and technical onboarding content
-                  for a production product at Kleo.
+                  I’m especially interested in translating real workflows into software that feels natural to use. I built a volleyball rotation tracker to solve a problem I've encountered firsthand while coaching, and during my internship at <a href="https://www.mykleo.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">mykleo.ai</a>, I have contributed to backend stability, UI/UX improvements, and created user onboarding content.
                 </p>
                 <p>
-                  Alongside development, I bring practical IT and troubleshooting experience, growing exposure
-                  to AI, and a strong appreciation for clarity, maintainability, and thoughtful design.
-                  I value clear communication, collaboration, and ownership, and I&apos;m comfortable working
-                  independently or within remote, cross-functional teams.
+                  Beyond my professional experience, I’m constantly learning—experimenting with new tools, refining existing projects, and exploring areas like AI fundamentals, UI architecture, and performance optimization. I value thoughtful design, ownership, and collaboration, and I’m comfortable working independently or with remote, cross-functional teams.
                 </p>
               </div>
 
@@ -255,7 +243,7 @@ export default function Home() {
       <footer className="py-20 border-t border-stone-100">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <p className="text-stone-400 font-medium tracking-tight">
-            &copy; {new Date().getFullYear()} Alexis Baranauskas. Built with passion.
+            &copy; 2026 Alexis Baranauskas
           </p>
           <div className="flex space-x-12">
             {[

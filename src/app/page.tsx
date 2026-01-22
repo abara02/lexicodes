@@ -7,23 +7,10 @@ import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { Vortex } from "@/components/ui/vortex";
 import { projects } from "@/data/projects";
 import { experiences } from "@/data/experience";
-import { useActionState } from "react";
-import { sendEmail } from "@/actions/send-email";
-import { useFormStatus } from "react-dom";
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button disabled={pending} type="submit" className="w-full py-6 bg-primary text-white rounded-2xl font-bold text-xl hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed">
-      <span>{pending ? "Sending..." : "Send Message"}</span>
-      {!pending && <Send size={20} className="group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500" />}
-    </button>
-  );
-}
 
 export default function Home() {
-  const [state, formAction] = useActionState(sendEmail, null);
+  // const [state, formAction] = useActionState(sendEmail, null);
   return (
     <div className="flex flex-col w-full">
       {/* Hero / Home Section */}
@@ -269,33 +256,28 @@ export default function Home() {
               </div>
 
               <div className="bg-stone-50 dark:bg-stone-800/50 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
-                <form action={formAction} className="space-y-8">
-                  {state?.error && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-bold">
-                      {state.error}
-                    </div>
-                  )}
-                  {state?.success && (
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-500 text-sm font-bold">
-                      Message sent successfully!
-                    </div>
-                  )}
+                <div className="space-y-8">
+                  <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl text-primary text-sm font-bold">
+                    Note: Contact form is currently disabled for static deployment. Please use the email link above.
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Name</label>
-                      <input name="senderName" type="text" required className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground" placeholder="John Doe" />
+                      <input disabled type="text" className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground opacity-60 cursor-not-allowed" placeholder="John Doe" />
                     </div>
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Email</label>
-                      <input name="senderEmail" type="email" required className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground" placeholder="john@example.com" />
+                      <input disabled type="email" className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground opacity-60 cursor-not-allowed" placeholder="john@example.com" />
                     </div>
                   </div>
                   <div className="space-y-3">
                     <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Message</label>
-                    <textarea name="message" rows={4} required className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg resize-none text-foreground" placeholder="How can I help you?"></textarea>
+                    <textarea disabled rows={4} className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg resize-none text-foreground opacity-60 cursor-not-allowed" placeholder="How can I help you?"></textarea>
                   </div>
-                  <SubmitButton />
-                </form>
+                  <button disabled className="w-full py-6 bg-primary text-white rounded-2xl font-bold text-xl hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group opacity-70 cursor-not-allowed">
+                    <span>Send Message</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -34,11 +34,11 @@ export const projects: Project[] = [
         image: "/projects/snake-game.png"
     },
     {
-        id: "new-project",
-        title: "Project Title",
-        description: "Project Description goes here.",
-        tech: ["Tech 1", "Tech 2"],
-        link: "",
-        image: ""
+        id: "pizza-app",
+        title: "Mock Pizza Ordering App",
+        description: "A simple mock up app designed to practicle mobile implementation, and ui design etc. It was done on android studio with kotlin as the language UI: XML layouts, ConstraintLayout, RecyclerView (for menu and cart)",
+        tech: ["Kotlin", "Android Studio", "XML", "Jetpack Components", "Gradle"],
+        github: "https://github.com/abara02/Mock-Pizza-Ordering-App",
+        image: "/projects/pizza-app.png"
     }
 ];

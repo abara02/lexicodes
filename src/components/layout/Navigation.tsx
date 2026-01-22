@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "About Me", href: "#about" },
@@ -12,6 +14,7 @@ const navLinks = [
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +36,8 @@ export default function Navigation() {
         >
           AB
         </a>
+
+        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-10">
           {navLinks.map((link) => (
             <a
@@ -44,7 +49,38 @@ export default function Navigation() {
             </a>
           ))}
         </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-foreground hover:text-primary transition-colors"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          {isOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "100vh" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden fixed inset-0 top-[60px] bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center space-y-8"
+          >
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="text-2xl font-bold tracking-widest text-foreground hover:text-primary transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

@@ -12,6 +12,13 @@ interface ProjectCarouselProps {
 const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
     const [index, setIndex] = useState(0);
     const [direction, setDirection] = useState(0);
+    const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // We use a virtual index to handle infinite looping
     // The actual index in the array is (index % projects.length + projects.length) % projects.length
@@ -44,7 +51,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
     return (
         <div className="relative w-full max-w-7xl mx-auto px-4 py-12">
             {/* Navigation Arrows */}
-            <div className="absolute top-1/2 -left-12 xl:-left-48 z-20 -translate-y-1/2 hidden md:block">
+            <div className="absolute top-1/2 -left-4 xl:-left-24 z-20 -translate-y-1/2 hidden md:block">
                 <button
                     onClick={prevStep}
                     className="p-5 bg-background border border-border rounded-full hover:bg-primary hover:text-white transition-all shadow-2xl group"
@@ -54,7 +61,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                 </button>
             </div>
 
-            <div className="absolute top-1/2 -right-12 xl:-right-48 z-20 -translate-y-1/2 hidden md:block">
+            <div className="absolute top-1/2 -right-4 xl:-right-24 z-20 -translate-y-1/2 hidden md:block">
                 <button
                     onClick={nextStep}
                     className="p-5 bg-background border border-border rounded-full hover:bg-primary hover:text-white transition-all shadow-2xl group"
@@ -82,7 +89,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                     zIndex: isActive ? 10 : 1
                                 }}
                                 animate={{
-                                    x: offset * (typeof window !== 'undefined' && window.innerWidth < 768 ? 320 : 480),
+                                    x: offset * (windowWidth < 768 ? 340 : 480),
                                     scale: isActive ? 1 : 0.85,
                                     opacity: isActive ? 1 : 0.5,
                                     zIndex: isActive ? 10 : 1
@@ -101,7 +108,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 drag={isActive ? "x" : false}
                                 dragConstraints={{ left: 0, right: 0 }}
                                 onDragEnd={handleDragEnd}
-                                className={`absolute w-[300px] md:w-[600px] bg-card rounded-[2.5rem] border border-border overflow-hidden shadow-2xl transition-colors duration-500 ${isActive ? "border-primary/30" : "border-border/50"
+                                className={`absolute w-[85vw] max-w-[350px] md:max-w-none md:w-[600px] bg-card rounded-[2.5rem] border border-border overflow-hidden shadow-2xl transition-colors duration-500 ${isActive ? "border-primary/30" : "border-border/50"
                                     } flex flex-col h-[520px] cursor-grab active:cursor-grabbing`}
                             >
                                 {/* Image Section */}
@@ -215,7 +222,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                     />
                 ))}
             </div>
-        </div>
+        </div >
     );
 };
 

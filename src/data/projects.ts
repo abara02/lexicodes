@@ -30,8 +30,8 @@ export const projects: Project[] = [
         title: "Snake Game in C",
         description: "I built a replica of the classic Snake game in C, implementing game logic, collision detection, and smooth gameplay mechanics.",
         tech: ["C", "Game Development", "Algorithms"],
-        github: "https://github.com/abara02/snakegame-c",
-        image: "/projects/snake.png"
+        github: "https://github.com/abara02",
+        image: "/projects/snake-game.png"
     },
     {
         id: "new-project",

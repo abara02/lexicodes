@@ -12,8 +12,8 @@ export const projects: Project[] = [
     {
         id: "kleo",
         title: "MyKleo.Ai",
-        description: "Intelligent content creation and publishing platform for modern marketing teams. An AI-powered social media teammate that streamlines workflows from ideation to publishing.",
-        tech: ["AI Marketing", "Content Strategy", "UI/UX Design", "Social Media Automation"],
+        description: "Worked on enhancing UI/UX, ensuring backend stability, and supporting experimental AI features while creating engaging product demos. Collaborated in team settings to deliver practical solutions and improve overall product performance.",
+        tech: ["React", "HTML", "CSS", "Next.js", "Prisma", "SQL", "Git"],
         link: "https://www.mykleo.ai/",
         image: "/projects/kleo.png"
     },
@@ -29,7 +29,7 @@ export const projects: Project[] = [
         id: "1",
         title: "Snake Game in C",
         description: "I built a replica of the classic Snake game in C, implementing game logic, collision detection, and smooth gameplay mechanics.",
-        tech: ["C", "Game Development", "Algorithms"],
+        tech: ["C Programming", "Arrays", "Structs", "Loops", "Terminal Graphics"],
         github: "https://github.com/abara02",
         image: "/projects/snake-game.png"
     },

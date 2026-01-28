@@ -6,6 +6,7 @@ export interface Project {
     link?: string;
     github?: string;
     image?: string;
+    objectPosition?: string;
 }
 
 export const projects: Project[] = [
@@ -24,7 +25,8 @@ export const projects: Project[] = [
         tech: ["React", "Next.js", "TypeScript"],
         github: "https://github.com/abara02",
         link: "https://volleytrack.net/",
-        image: "/projects/volleytrack-main.png"
+        image: "/projects/volleytrack-main.png",
+        objectPosition: "center 30%"
     },
     {
         id: "1",

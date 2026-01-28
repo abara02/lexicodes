@@ -72,7 +72,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
             </div>
 
             {/* Carousel Container */}
-            <div className="relative h-[600px] flex items-center justify-center">
+            <div className="relative h-[650px] flex items-center justify-center">
                 <AnimatePresence initial={false} custom={direction} mode="popLayout">
                     {[-1, 0, 1].map((offset) => {
                         const project = getProject(index + offset);
@@ -109,7 +109,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 dragConstraints={{ left: 0, right: 0 }}
                                 onDragEnd={handleDragEnd}
                                 className={`absolute w-[85vw] max-w-[350px] md:max-w-none md:w-[600px] bg-card rounded-[2.5rem] border border-border overflow-hidden shadow-2xl transition-colors duration-500 ${isActive ? "border-primary/30" : "border-border/50"
-                                    } flex flex-col h-[520px] cursor-grab active:cursor-grabbing`}
+                                    } flex flex-col h-[580px] cursor-grab active:cursor-grabbing`}
                             >
                                 {/* Image Section */}
                                 <div className="h-64 relative bg-stone-100 dark:bg-stone-800 overflow-hidden group/img">
@@ -117,7 +117,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                         <img
                                             src={project.image}
                                             alt={project.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105 pointer-events-none"
+                                            className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover/img:scale-105 pointer-events-none"
                                         />
                                     ) : (
                                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
@@ -180,7 +180,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                             }`}>
                                             {project.title}
                                         </h3>
-                                        <p className={`mt-4 text-base md:text-lg leading-relaxed line-clamp-3 transition-opacity duration-300 ${isActive ? "text-secondary" : "text-muted"
+                                        <p className={`mt-4 text-base md:text-lg leading-relaxed transition-opacity duration-300 ${isActive ? "text-secondary" : "text-muted"
                                             }`}>
                                             {project.description}
                                         </p>

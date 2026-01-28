@@ -42,7 +42,7 @@ export default function Home() {
                   href="#projects"
                   className="inline-flex items-center space-x-4 px-10 py-5 bg-primary text-white rounded-full hover:bg-primary-hover transition-all duration-300 font-bold shadow-2xl shadow-primary/20 group"
                 >
-                  <span className="text-lg">View Projects</span>
+                  <span className="text-lg">View Portfolio</span>
                   <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform duration-300" />
                 </a>
               </div>
@@ -179,8 +179,8 @@ export default function Home() {
       <section id="projects" className="py-24 lg:py-32">
         <div className="container mx-auto px-6">
           <SectionHeader
-            title="Projects"
-            subtitle="Engaging technical implementations and personal projects."
+            title="Portfolio"
+            subtitle="Showcasing my technical experience and personalprojects."
           />
           <ProjectCarousel projects={projects} />
         </div>

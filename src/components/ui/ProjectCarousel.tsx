@@ -117,7 +117,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                         <img
                                             src={project.image}
                                             alt={project.title}
-                                            className="w-full h-full object-contain p-4 transition-transform duration-700 group-hover/img:scale-105 pointer-events-none"
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105 pointer-events-none"
                                         />
                                     ) : (
                                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">

@@ -19,7 +19,7 @@ export const projects: Project[] = [
     },
     {
         id: "volleyball",
-        title: "VolleyTrack.net",
+        title: "Volleyball Rotation Tracker",
         description: "I built a website that allows volleyball coaches to easily track players on the court, giving them more time to be present with their athletes. This project was my solution to a real problem I faced in my own experience as a volleyball coach.",
         tech: ["React", "Next.js", "TypeScript"],
         github: "https://github.com/abara02",

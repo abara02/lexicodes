@@ -26,7 +26,7 @@ export const projects: Project[] = [
         github: "https://github.com/abara02",
         link: "https://volleytrack.net/",
         image: "/projects/volleytrack-main.png",
-        objectPosition: "center 30%"
+        objectPosition: "center"
     },
     {
         id: "1",

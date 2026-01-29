@@ -295,11 +295,6 @@ export default function Home() {
                       {error}
                     </div>
                   )}
-                  {!success && !error && (
-                    <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl text-primary text-sm font-bold">
-                      Note: Emails are sent via Resend. I usually respond within 24 hours.
-                    </div>
-                  )}
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">

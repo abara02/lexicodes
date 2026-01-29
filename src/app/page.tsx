@@ -292,7 +292,7 @@ export default function Home() {
           <div className="flex space-x-12">
             {[
               { name: "About Me", href: "#about" },
-              { name: "Projects", href: "#projects" },
+              { name: "Portfolio", href: "#projects" },
               { name: "Experience", href: "#resume" },
               { name: "Connect", href: "#contact" }
             ].map(l => (

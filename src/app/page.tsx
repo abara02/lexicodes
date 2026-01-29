@@ -66,7 +66,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 lg:py-32 bg-stone-50/10">
+      <section id="about" className="py-24 lg:py-32">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <SectionHeader
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="resume" className="py-24 lg:py-32 bg-stone-50/10">
+      <section id="resume" className="py-24 lg:py-32">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
             <SectionHeader

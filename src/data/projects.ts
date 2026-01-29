@@ -28,7 +28,7 @@ export const projects: Project[] = [
         link: "https://volleytrack.net/",
         image: "/projects/volleytrack-main.png",
         objectPosition: "center",
-        scale: 1.4
+        scale: 1
     },
     {
         id: "1",

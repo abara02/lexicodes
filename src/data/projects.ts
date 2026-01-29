@@ -18,8 +18,8 @@ export const projects: Project[] = [
         tech: ["React", "TypeScript", "Next.js", "Prisma"],
         link: "https://www.mykleo.ai/",
         image: "/projects/kleo.png",
-        objectPosition: "center 85%",
-        scale: 1.1
+        objectPosition: "center 80%",
+        scale: 1.2
     },
     {
         id: "volleyball",

@@ -134,6 +134,9 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                         <div className="absolute inset-0 bg-background/40 backdrop-blur-[1px] transition-opacity" />
                                     )}
 
+                                    {/* Bottom Mask to hide reflections */}
+                                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card to-transparent pointer-events-none z-[5]" />
+
                                     {/* Action Buttons (Only for active card) */}
                                     {isActive && (
                                         <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-10">

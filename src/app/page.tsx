@@ -180,7 +180,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <SectionHeader
             title="Portfolio"
-            subtitle="Showcasing my technical experience and personalprojects."
+            subtitle="Showcasing my technical experience and personal projects."
           />
           <ProjectCarousel projects={projects} />
         </div>
@@ -194,7 +194,7 @@ export default function Home() {
               title="Experience"
               subtitle="Professional background and technical roles."
             />
-            <a href="/Alexis B Resume.pdf" download className="flex items-center space-x-3 px-10 py-5 bg-foreground text-background rounded-full hover:bg-primary transition-all duration-300 font-bold shadow-xl shadow-stone-900/10 dark:shadow-none">
+            <a href="/Alexis Baranauskas Resume.pdf" download className="flex items-center space-x-3 px-10 py-5 bg-foreground text-background rounded-full hover:bg-primary transition-all duration-300 font-bold shadow-xl shadow-stone-900/10 dark:shadow-none">
               <Download size={20} />
               <span className="text-lg">Download Resume</span>
             </a>

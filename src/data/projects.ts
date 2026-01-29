@@ -17,7 +17,9 @@ export const projects: Project[] = [
         description: "Worked on enhancing UI/UX, ensuring backend stability, and supporting experimental AI features while creating engaging product demos. Collaborated in team settings to deliver practical solutions and improve overall product performance.",
         tech: ["React", "TypeScript", "Next.js", "Prisma"],
         link: "https://www.mykleo.ai/",
-        image: "/projects/kleo.png"
+        image: "/projects/kleo.png",
+        objectPosition: "top center",
+        scale: 1.1
     },
     {
         id: "volleyball",
@@ -27,8 +29,8 @@ export const projects: Project[] = [
         github: "https://github.com/abara02",
         link: "https://volleytrack.net/",
         image: "/projects/volleytrack-main.png",
-        objectPosition: "center",
-        scale: 1
+        objectPosition: "top center",
+        scale: 1.1
     },
     {
         id: "1",
@@ -36,7 +38,9 @@ export const projects: Project[] = [
         description: "I built a replica of the classic Snake game in C, implementing game logic, collision detection, and smooth gameplay mechanics.",
         tech: ["Data Structures", "C Programming"],
         github: "https://github.com/abara02",
-        image: "/projects/snake-game.png"
+        image: "/projects/snake-game.png",
+        objectPosition: "top center",
+        scale: 1.1
     },
     {
         id: "pizza-app",
@@ -44,6 +48,8 @@ export const projects: Project[] = [
         description: "A simple mock up app designed to practicle mobile implementation, and ui design etc. It was done on android studio with kotlin as the language UI: XML layouts, ConstraintLayout, RecyclerView (for menu and cart)",
         tech: ["Kotlin", "Android Studio", "XML", "Jetpack Components", "Gradle"],
         github: "https://github.com/abara02/Mock-Pizza-Ordering-App",
-        image: "/projects/pizza-app.png"
+        image: "/projects/pizza-app.png",
+        objectPosition: "top center",
+        scale: 1.1
     }
 ];

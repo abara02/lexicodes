@@ -5,6 +5,10 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendEmail(formData: { name: string; email: string; message: string }) {
+    if (!process.env.RESEND_API_KEY) {
+        return { error: "API key is missing. Please set RESEND_API_KEY in environment variables." };
+    }
+
     const { name, email, message } = formData;
 
     if (!name || !email || !message) {

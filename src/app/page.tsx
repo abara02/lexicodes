@@ -268,19 +268,25 @@ export default function Home() {
                     setError(null);
                     setSuccess(false);
 
-                    const formData = new FormData(e.currentTarget);
-                    const name = formData.get("name") as string;
-                    const email = formData.get("email") as string;
-                    const message = formData.get("message") as string;
+                    try {
+                      const formData = new FormData(e.currentTarget);
+                      const name = formData.get("name") as string;
+                      const email = formData.get("email") as string;
+                      const message = formData.get("message") as string;
 
-                    const result = await sendEmail({ name, email, message });
+                      const result = await sendEmail({ name, email, message });
 
-                    setIsSubmitting(false);
-                    if (result.success) {
-                      setSuccess(true);
-                      (e.target as HTMLFormElement).reset();
-                    } else {
-                      setError(result.error || "Something went wrong.");
+                      if (result.success) {
+                        setSuccess(true);
+                        (e.target as HTMLFormElement).reset();
+                      } else {
+                        setError(result.error || "Something went wrong.");
+                      }
+                    } catch (err: any) {
+                      console.error("Form Submission Error:", err);
+                      setError("Failed to reach the server. Please try again later.");
+                    } finally {
+                      setIsSubmitting(false);
                     }
                   }}
                   className="space-y-8"

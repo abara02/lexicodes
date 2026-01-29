@@ -1,9 +1,0 @@
-[00:00:02.150] Server  LOG     ✓ Ready in 1433ms
-[00:00:04.566] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:16.616] Server  LOG     ✓ Compiled in 329ms
-[00:00:17.161] Browser ERROR   uncaughtError: ReferenceError: success is not defined
-[00:00:18.759] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:00:19.308] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:37.582] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:04:07.638] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:04:59.655] Server  LOG     ✓ Compiled in 353ms

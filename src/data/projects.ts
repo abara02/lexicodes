@@ -18,7 +18,7 @@ export const projects: Project[] = [
         tech: ["React", "TypeScript", "Next.js", "Prisma"],
         link: "https://www.mykleo.ai/",
         image: "/projects/kleo.png",
-        objectPosition: "top center",
+        objectPosition: "center 85%",
         scale: 1.1
     },
     {
@@ -29,8 +29,8 @@ export const projects: Project[] = [
         github: "https://github.com/abara02",
         link: "https://volleytrack.net/",
         image: "/projects/volleytrack-main.png",
-        objectPosition: "top center",
-        scale: 1.1
+        objectPosition: "center",
+        scale: 1.3
     },
     {
         id: "1",

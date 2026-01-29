@@ -8,9 +8,14 @@ import { Vortex } from "@/components/ui/vortex";
 import { projects } from "@/data/projects";
 import { experiences } from "@/data/experience";
 
+import { useState } from "react";
+import { sendEmail } from "@/app/actions/contact";
+
 
 export default function Home() {
-  // const [state, formAction] = useActionState(sendEmail, null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null as string | null);
   return (
     <div className="flex flex-col w-full">
       {/* Hero / Home Section */}
@@ -256,28 +261,96 @@ export default function Home() {
               </div>
 
               <div className="bg-stone-50 dark:bg-stone-800/50 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
-                <div className="space-y-8">
-                  <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl text-primary text-sm font-bold">
-                    Note: Contact form is currently disabled for static deployment. Please use the email link above.
-                  </div>
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setIsSubmitting(true);
+                    setError(null);
+                    setSuccess(false);
+
+                    const formData = new FormData(e.currentTarget);
+                    const name = formData.get("name") as string;
+                    const email = formData.get("email") as string;
+                    const message = formData.get("message") as string;
+
+                    const result = await sendEmail({ name, email, message });
+
+                    setIsSubmitting(false);
+                    if (result.success) {
+                      setSuccess(true);
+                      (e.target as HTMLFormElement).reset();
+                    } else {
+                      setError(result.error || "Something went wrong.");
+                    }
+                  }}
+                  className="space-y-8"
+                >
+                  {success && (
+                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-500 text-sm font-bold animate-in fade-in zoom-in duration-300">
+                      Message sent successfully! I'll get back to you soon.
+                    </div>
+                  )}
+                  {error && (
+                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-bold animate-in fade-in zoom-in duration-300">
+                      {error}
+                    </div>
+                  )}
+                  {!success && !error && (
+                    <div className="p-4 bg-primary/10 border border-primary/20 rounded-xl text-primary text-sm font-bold">
+                      Note: Emails are sent via Resend. I usually respond within 24 hours.
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Name</label>
-                      <input disabled type="text" className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground opacity-60 cursor-not-allowed" placeholder="John Doe" />
+                      <input
+                        required
+                        name="name"
+                        type="text"
+                        disabled={isSubmitting}
+                        className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground disabled:opacity-60"
+                        placeholder="John Doe"
+                      />
                     </div>
                     <div className="space-y-3">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Email</label>
-                      <input disabled type="email" className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground opacity-60 cursor-not-allowed" placeholder="john@example.com" />
+                      <input
+                        required
+                        name="email"
+                        type="email"
+                        disabled={isSubmitting}
+                        className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground disabled:opacity-60"
+                        placeholder="john@example.com"
+                      />
                     </div>
                   </div>
                   <div className="space-y-3">
                     <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Message</label>
-                    <textarea disabled rows={4} className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg resize-none text-foreground opacity-60 cursor-not-allowed" placeholder="How can I help you?"></textarea>
+                    <textarea
+                      required
+                      name="message"
+                      rows={4}
+                      disabled={isSubmitting}
+                      className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg resize-none text-foreground disabled:opacity-60"
+                      placeholder="How can I help you?"
+                    ></textarea>
                   </div>
-                  <button disabled className="w-full py-6 bg-primary text-white rounded-2xl font-bold text-xl hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group opacity-70 cursor-not-allowed">
-                    <span>Send Message</span>
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-6 bg-primary text-white rounded-2xl font-bold text-xl hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        <span>Send Message</span>
+                      </>
+                    )}
                   </button>
-                </div>
+                </form>
               </div>
             </div>
           </div>

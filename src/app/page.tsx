@@ -114,6 +114,13 @@ export default function Home() {
                     I’m always learning, experimenting with new tools, refining projects, and exploring areas like AI fundamentals, frontend architecture, and performance optimization. I value quality, thoughtful design, and clear communication, and I enjoy working both independently and with remote, cross-functional teams.
                   </p>
                 </div>
+
+                <div className="pt-4">
+                  <a href="/Alexis Baranauskas Resume.pdf" download className="inline-flex items-center space-x-3 px-10 py-5 bg-foreground text-background rounded-full hover:bg-primary transition-all duration-300 font-bold shadow-xl shadow-stone-900/10 dark:shadow-none">
+                    <Download size={20} />
+                    <span className="text-lg">Download Resume</span>
+                  </a>
+                </div>
               </div>
 
               <div className="lg:col-span-2">
@@ -187,10 +194,6 @@ export default function Home() {
               title="Portfolio"
               subtitle="Showcasing my technical experience and personal projects."
             />
-            <a href="/Alexis Baranauskas Resume.pdf" download className="flex items-center space-x-3 px-10 py-5 bg-foreground text-background rounded-full hover:bg-primary transition-all duration-300 font-bold shadow-xl shadow-stone-900/10 dark:shadow-none">
-              <Download size={20} />
-              <span className="text-lg">Download Resume</span>
-            </a>
           </div>
           <ProjectCarousel projects={projects} />
         </div>

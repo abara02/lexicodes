@@ -6,7 +6,6 @@ import ProjectCarousel from "@/components/ui/ProjectCarousel";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
 import { Vortex } from "@/components/ui/vortex";
 import { projects } from "@/data/projects";
-import { experiences } from "@/data/experience";
 
 import { useState } from "react";
 import { sendEmail } from "@/app/actions/contact";
@@ -180,53 +179,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* Portfolio Section */}
       <section id="projects" className="py-24 lg:py-32">
-        <div className="container mx-auto px-6">
-          <SectionHeader
-            title="Portfolio"
-            subtitle="Showcasing my technical experience and personal projects."
-          />
-          <ProjectCarousel projects={projects} />
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section id="resume" className="py-24 lg:py-32">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
             <SectionHeader
-              title="Experience"
-              subtitle="Professional background and technical roles."
+              title="Portfolio"
+              subtitle="Showcasing my technical experience and personal projects."
             />
             <a href="/Alexis Baranauskas Resume.pdf" download className="flex items-center space-x-3 px-10 py-5 bg-foreground text-background rounded-full hover:bg-primary transition-all duration-300 font-bold shadow-xl shadow-stone-900/10 dark:shadow-none">
               <Download size={20} />
               <span className="text-lg">Download Resume</span>
             </a>
           </div>
-          <div className="max-w-4xl space-y-16">
-            {experiences.map((exp) => (
-              <div key={exp.id} className="relative pl-6 md:pl-12 border-l-2 border-border group">
-                <div className="space-y-6">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-4">
-                    <h3 className="text-3xl font-bold font-outfit group-hover:text-primary transition-colors text-foreground">{exp.role}</h3>
-                    <span className="px-4 py-1.5 bg-primary/5 text-primary rounded-full text-xs font-bold tracking-widest uppercase">{exp.duration}</span>
-                  </div>
-                  <p className="text-2xl font-bold text-muted leading-none">{exp.company}</p>
-                  <ul className="space-y-5 pt-4">
-                    {exp.description.map((item, idx) => (
-                      <li key={idx} className="text-secondary leading-relaxed text-lg flex items-start">
-                        <span className="mr-5 text-primary mt-2.5 h-1.5 w-1.5 rounded-full bg-border group-hover:bg-primary transition-colors flex-shrink-0"></span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProjectCarousel projects={projects} />
         </div>
-      </section >
+      </section>
+
 
       {/* Contact Section */}
       < section id="contact" className="py-24 lg:py-32" >
@@ -367,7 +336,6 @@ export default function Home() {
             {[
               { name: "About Me", href: "#about" },
               { name: "Portfolio", href: "#projects" },
-              { name: "Experience", href: "#resume" },
               { name: "Connect", href: "#contact" }
             ].map(l => (
               <a key={l.name} href={l.href} className="text-xs font-bold uppercase tracking-[0.2em] text-stone-400 hover:text-primary transition-colors">

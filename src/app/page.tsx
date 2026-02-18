@@ -125,7 +125,7 @@ export default function Home() {
 
               <div className="lg:col-span-2">
                 <CardContainer className="w-full">
-                  <CardBody className="p-10 md:p-14 rounded-[3rem] border border-stone-200/60 dark:border-stone-800 bg-gradient-to-br from-white/90 to-stone-100/50 dark:from-stone-900/90 dark:to-black/50 backdrop-blur-3xl shadow-2xl shadow-stone-200/50 dark:shadow-none w-full min-h-[650px] flex flex-col justify-center relative overflow-hidden group/card hover:shadow-primary/10 transition-shadow duration-500">
+                  <CardBody className="p-10 md:p-14 rounded-[3rem] border border-stone-200/60 dark:border-stone-800 bg-gradient-to-br from-white/90 to-stone-100/50 dark:from-stone-900/90 dark:to-black/50 backdrop-blur-3xl shadow-2xl shadow-stone-200/50 dark:shadow-none w-full min-h-[450px] flex flex-col justify-center relative overflow-hidden group/card hover:shadow-primary/10 transition-shadow duration-500">
                     <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none"></div>
 
@@ -156,28 +156,7 @@ export default function Home() {
                       </CardItem>
                     </div>
 
-                    <div className="pt-12 mt-12 border-t border-border/40 relative z-10">
-                      <CardItem translateZ="40" className="w-full">
-                        <div className="flex items-center space-x-3 mb-8">
-                          <Code2 size={18} className="text-primary" />
-                          <p className="text-xs font-bold text-muted uppercase tracking-[0.2em]">Core Competencies</p>
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                          {[
-                            "Java & Python",
-                            "C & Assembly",
-                            "Data Structures",
-                            "AI & ML",
-                            "Systems Programming",
-                            "Digital Forensics"
-                          ].map(tag => (
-                            <span key={tag} className="px-4 py-2.5 bg-white dark:bg-stone-800/50 hover:bg-primary/5 text-secondary dark:text-stone-300 text-xs font-bold rounded-xl border border-stone-200 dark:border-stone-700/50 shadow-sm hover:border-primary/30 transition-all duration-300 cursor-default">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </CardItem>
-                    </div>
+
                   </CardBody>
                 </CardContainer>
               </div>

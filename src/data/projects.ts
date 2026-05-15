@@ -17,9 +17,9 @@ export const projects: Project[] = [
         description: "Redesigned and rebuilt the Sunset Meadow Vineyards website with a user-focused experience, modern e-commerce functionality, and a fully responsive UI. Implemented a headless WordPress CMS backend to provide flexible content management, scalability, and optimized performance.",
         tech: ["Next.js", "React", "Tailwind CSS", "JavaScript", "GraphQL"],
         link: "https://www.sunsetmeadowvineyards.com/",
-        image: "/projects/ecommerce.png",
-        objectPosition: "center",
-        scale: 1.0
+        image: "/projects/sunset-meadow.png",
+        objectPosition: "top center",
+        scale: 1.1
     },
     {
         id: "kleo",
@@ -59,16 +59,6 @@ export const projects: Project[] = [
         tech: ["Kotlin", "Android Studio", "XML", "Jetpack Components", "Gradle"],
         github: "https://github.com/abara02/Mock-Pizza-Ordering-App",
         image: "/projects/pizza-app.png",
-        objectPosition: "top center",
-        scale: 1.1
-    },
-    {
-        id: "sunset-vineyards",
-        title: "Sunset Meadow Vineyards",
-        description: "Redesigned and rebuilt the Sunset Meadow Vineyards website with a user-focused experience, modern e-commerce functionality, and a fully responsive UI. Implemented a headless WordPress CMS backend to provide flexible content management, scalability, and optimized performance.",
-        tech: ["Next.js", "React", "Tailwind CSS", "Javascript", "GraphQL"],
-        link: "https://sunsetmv.vercel.app/",
-        image: "/projects/sunset-meadow.png",
         objectPosition: "top center",
         scale: 1.1
     }

@@ -12,6 +12,16 @@ export interface Project {
 
 export const projects: Project[] = [
     {
+        id: "sunset",
+        title: "Sunset Meadow Vineyards",
+        description: "Redesigned and rebuilt the Sunset Meadow Vineyards website with a user-focused experience, modern e-commerce functionality, and a fully responsive UI. Implemented a headless WordPress CMS backend to provide flexible content management, scalability, and optimized performance.",
+        tech: ["Next.js", "React", "Tailwind CSS", "JavaScript", "GraphQL"],
+        link: "https://www.sunsetmeadowvineyards.com/",
+        image: "/projects/ecommerce.png",
+        objectPosition: "center",
+        scale: 1.0
+    },
+    {
         id: "kleo",
         title: "MyKleo.Ai",
         description: "Worked on enhancing UI/UX, ensuring backend stability, and supporting experimental AI features while creating engaging product demos. Collaborated in team settings to deliver practical solutions and improve overall product performance.",

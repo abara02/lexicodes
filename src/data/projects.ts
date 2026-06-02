@@ -68,7 +68,7 @@ export const projects: Project[] = [
         description: "Designed and developed a modern website for Crabby Al’s Seafood Restaurant with a fresh coastal feel, easy-to-navigate menus, and a fully responsive layout. Focused on showcasing the restaurant’s seafood offerings, improving customer engagement, and creating a smooth browsing experience across devices.",
         tech: ["Next.js", "React", "CSS", "TypeScript", "Responsive Design"],
         link: "https://www.crabbyals.com/",
-        image: "/projects/crabby-als.png",
+        image: "/projects/crabby-als.jpg",
         objectPosition: "center",
         scale: 1.1
     }

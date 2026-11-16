@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Mail,
   ExternalLink,
-  Github,
   Send,
   Linkedin,
   GraduationCap,
@@ -15,7 +14,15 @@ import {
   DollarSign,
   MessageSquareHeart,
   ChevronDown,
+  MessageCircle,
+  Palette,
+  Code2,
+  Rocket,
+  Layout,
+  Layers,
+  ShoppingBag,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ProjectCarousel from "@/components/ui/ProjectCarousel";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
@@ -49,6 +56,7 @@ const serviceTiers = [
   {
     tier: "TIER 01",
     name: "Starter",
+    icon: Layout,
     price: "$2,250",
     billing: "starting at / one-time",
     popular: false,
@@ -69,6 +77,7 @@ const serviceTiers = [
   {
     tier: "TIER 02",
     name: "Growth & CMS",
+    icon: Layers,
     price: "$3,500",
     billing: "starting at / one-time",
     popular: true,
@@ -90,6 +99,7 @@ const serviceTiers = [
   {
     tier: "TIER 03",
     name: "E-Commerce",
+    icon: ShoppingBag,
     price: "$4,500",
     billing: "starting at / one-time",
     popular: false,
@@ -124,24 +134,28 @@ const hostingFeatures = [
 const processSteps = [
   {
     step: "01",
+    icon: MessageCircle,
     title: "Let's Talk",
     description:
       "We'll start with a friendly conversation about your business, your goals, and what you need from your website. I'll help you find the right solution for your needs and budget.",
   },
   {
     step: "02",
+    icon: Palette,
     title: "Design & Planning",
     description:
       "I'll create a modern, thoughtful design tailored to your brand. We'll review the layout together and make revisions based on your feedback to fine-tune the details before development begins.",
   },
   {
     step: "03",
+    icon: Code2,
     title: "Development & Testing",
     description:
       "I'll bring your website to life with responsive design, optimized performance, and the functionality your business needs. Everything is carefully tested before launch.",
   },
   {
     step: "04",
+    icon: Rocket,
     title: "Launch & Support",
     description:
       "Once everything is ready, I'll handle the launch and help you get comfortable with your new website. Ongoing hosting, maintenance, and support are also available.",
@@ -152,7 +166,6 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null as string | null);
-  const [formStartedAt] = useState(() => Date.now());
   const [expandedTiers, setExpandedTiers] = useState<Record<string, boolean>>({});
 
   const toggleTier = (tierKey: string) => {
@@ -365,10 +378,15 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {independentPromises.map((promise) => (
-              <div
+            {independentPromises.map((promise, idx) => (
+              <motion.div
                 key={promise.title}
-                className="rounded-[2rem] bg-card border border-border p-8 hover:border-primary/40 transition-all shadow-xl"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+                whileHover={{ y: -6 }}
+                className="rounded-[2rem] bg-card border border-border p-8 hover:border-primary/40 transition-colors shadow-xl"
               >
                 <div className="w-12 h-12 rounded-2xl bg-primary/15 text-primary flex items-center justify-center mb-6">
                   <promise.icon size={24} />
@@ -379,7 +397,7 @@ export default function Home() {
                 <p className="text-secondary text-sm sm:text-base leading-relaxed">
                   {promise.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -399,15 +417,20 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto items-start">
-            {serviceTiers.map((tier) => {
+            {serviceTiers.map((tier, idx) => {
               const isExpanded = !!expandedTiers[tier.tier];
               const initialFeatures = tier.features.slice(0, 2);
               const extraFeatures = tier.features.slice(2);
 
               return (
-                <div
+                <motion.div
                   key={tier.tier}
-                  className={`relative rounded-[2.5rem] p-8 sm:p-10 transition-all duration-300 flex flex-col justify-between shadow-2xl ${
+                  initial={{ opacity: 0, y: 32 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+                  whileHover={{ y: -6 }}
+                  className={`relative rounded-[2.5rem] p-8 sm:p-10 transition-colors duration-300 flex flex-col justify-between shadow-2xl ${
                     tier.popular
                       ? "bg-gradient-to-b from-primary/15 via-card to-card border-2 border-primary/60 shadow-primary/10"
                       : "bg-card border border-border hover:border-primary/40"
@@ -420,7 +443,10 @@ export default function Home() {
                   )}
 
                   <div>
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 text-primary flex items-center justify-center">
+                        <tier.icon size={24} />
+                      </div>
                       <span className="text-xs font-extrabold uppercase tracking-[0.25em] text-primary">
                         {tier.tier}
                       </span>
@@ -509,7 +535,7 @@ export default function Home() {
                       <ArrowRight size={18} />
                     </a>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -625,21 +651,31 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {processSteps.map((item) => (
-              <div
+            {processSteps.map((item, idx) => (
+              <motion.div
                 key={item.step}
-                className="relative rounded-[2rem] bg-card border border-border p-8 flex flex-col justify-between hover:border-primary/40 transition-colors"
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
+                whileHover={{ y: -6 }}
+                className="group relative rounded-[2rem] bg-card border border-border p-8 flex flex-col justify-between hover:border-primary/40 transition-colors shadow-xl"
               >
                 <div>
-                  <span className="inline-block text-4xl font-extrabold font-outfit text-primary/30 mb-4">
-                    {item.step}
-                  </span>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-stone-950 transition-colors duration-300">
+                      <item.icon size={24} />
+                    </div>
+                    <span className="text-3xl font-extrabold font-outfit text-primary/35 group-hover:text-primary/60 transition-colors">
+                      {item.step}
+                    </span>
+                  </div>
                   <h3 className="text-xl font-bold font-outfit text-foreground mb-3">
                     {item.title}
                   </h3>
                   <p className="text-secondary text-sm leading-relaxed">{item.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -780,10 +816,6 @@ export default function Home() {
                         <p className="text-secondary text-sm font-medium">
                           Central Connecticut State University &bull; May 2025
                         </p>
-                        <div className="mt-3 inline-flex items-center px-3 py-1 bg-stone-900 rounded-lg text-[11px] font-bold text-stone-300 uppercase tracking-wider border border-stone-800">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2" />
-                          Minor in Arabic Language
-                        </div>
                       </div>
                     </CardItem>
                   </CardBody>
@@ -821,12 +853,6 @@ export default function Home() {
                       label: "LinkedIn",
                       value: "alexisb-dev",
                       href: "https://www.linkedin.com/in/alexisb-dev/",
-                    },
-                    {
-                      icon: Github,
-                      label: "GitHub",
-                      value: "abara02",
-                      href: "https://github.com/abara02",
                     },
                   ].map((item) => (
                     <a
@@ -870,25 +896,33 @@ export default function Home() {
                         serviceType:
                           (formData.get("serviceType") as string) || "General Inquiry",
                         message: (formData.get("message") as string) || "",
-                        website_url: (formData.get("website_url") as string) || "",
-                        formStartedAt,
+                        _gotcha: (formData.get("_gotcha") as string) || "",
                       };
 
                       const response = await fetch("/api/contact", {
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json",
+                          Accept: "application/json",
                         },
                         body: JSON.stringify(payload),
                       });
 
-                      const result = await response.json();
+                      let result: { success?: boolean; id?: string; error?: string } | null = null;
+                      try {
+                        result = await response.json();
+                      } catch {
+                        result = null;
+                      }
 
-                      if (response.ok && result.success) {
+                      if (response.ok && result?.success === true && Boolean(result?.id)) {
                         setSuccess(true);
                         formElement.reset();
                       } else {
-                        setError(result.error || "Something went wrong.");
+                        setError(
+                          result?.error ||
+                            `Unable to send message (HTTP ${response.status}). Please try again or email lexi.codes.dev@gmail.com directly.`
+                        );
                       }
                     } catch (err: unknown) {
                       console.error("Form Submission Error:", err);
@@ -899,15 +933,14 @@ export default function Home() {
                   }}
                   className="space-y-6"
                 >
-                  {/* Honeypot field for spam protection (visually hidden) */}
+                  {/* Honeypot field for spam protection (visually hidden, non-autofillable) */}
                   <div className="sr-only" aria-hidden="true">
-                    <label htmlFor="website_url">Website</label>
                     <input
-                      id="website_url"
-                      name="website_url"
+                      id="_gotcha"
+                      name="_gotcha"
                       type="text"
                       tabIndex={-1}
-                      autoComplete="off"
+                      autoComplete="new-password"
                     />
                   </div>
 
@@ -1008,7 +1041,7 @@ export default function Home() {
                       required
                       name="message"
                       rows={4}
-                      minLength={10}
+                      minLength={5}
                       maxLength={5000}
                       disabled={isSubmitting}
                       className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
@@ -1049,10 +1082,6 @@ export default function Home() {
               alt="LexiCodes Digital — Webdesign & Development"
               className="h-9 w-auto object-contain"
             />
-            <p className="text-secondary text-xs sm:text-sm font-medium">
-              Independently owned web design &amp; development studio. Modern websites. Personal
-              service.
-            </p>
             <p className="text-muted text-xs">
               &copy; {new Date().getFullYear()} LexiCodes Digital — Alexis Baranauskas. All rights
               reserved.

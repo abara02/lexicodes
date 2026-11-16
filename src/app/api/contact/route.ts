@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 const SENDER_EMAIL = "LexiCodes Digital <contact@lexicodesdigital.com>";
 const RECIPIENT_EMAIL = "lexi.codes.dev@gmail.com";
 
@@ -9,7 +12,7 @@ const MAX_NAME_LENGTH = 100;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_BUSINESS_LENGTH = 150;
 const MAX_SERVICE_LENGTH = 120;
-const MIN_MESSAGE_LENGTH = 10;
+const MIN_MESSAGE_LENGTH = 5;
 const MAX_MESSAGE_LENGTH = 5000;
 
 // Sliding-window rate limit: max 5 requests per 15 minutes per IP
@@ -21,7 +24,6 @@ function isRateLimited(ip: string): boolean {
   const now = Date.now();
   const windowStart = now - RATE_LIMIT_WINDOW_MS;
 
-  // Periodic cleanup to avoid unbounded map growth
   if (rateLimitStore.size > 1000) {
     for (const [key, timestamps] of rateLimitStore.entries()) {
       const valid = timestamps.filter((t) => t > windowStart);
@@ -61,11 +63,18 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export async function POST(req: NextRequest) {
   try {
-    const apiKey = process.env.RESEND_API_KEY;
+    console.info("[Contact API] Received POST /api/contact request");
+
+    const apiKey = process.env.RESEND_API_KEY?.trim();
     if (!apiKey) {
-      console.error("Contact API Error: RESEND_API_KEY is not configured.");
+      console.error(
+        "[Contact API] Missing RESEND_API_KEY environment variable on the server."
+      );
       return NextResponse.json(
-        { error: "Email service is not configured on the server." },
+        {
+          error:
+            "Server email configuration error (missing API key). Please email lexi.codes.dev@gmail.com directly.",
+        },
         { status: 500 }
       );
     }
@@ -77,6 +86,7 @@ export async function POST(req: NextRequest) {
       "unknown";
 
     if (isRateLimited(clientIp)) {
+      console.warn(`[Contact API] Rate limit exceeded for IP: ${clientIp}`);
       return NextResponse.json(
         {
           error:
@@ -89,27 +99,25 @@ export async function POST(req: NextRequest) {
     let body: Record<string, unknown>;
     try {
       body = await req.json();
-    } catch {
+    } catch (parseErr: unknown) {
+      console.warn("[Contact API] Failed to parse request JSON:", parseErr);
       return NextResponse.json({ error: "Invalid request payload." }, { status: 400 });
     }
 
-    // 1. Honeypot check (if filled by a bot, silently return success without sending email)
-    const honeypot = typeof body.website_url === "string" ? body.website_url.trim() : "";
+    // 1. Honeypot check — never return a fake success; return 400 so the UI never claims an email was sent when it wasn't
+    const honeypot = typeof body._gotcha === "string" ? body._gotcha.trim() : "";
     if (honeypot.length > 0) {
-      return NextResponse.json({ success: true });
+      console.warn("[Contact API] Honeypot field (_gotcha) was populated; blocking request.");
+      return NextResponse.json(
+        { error: "Spam check triggered. Please refresh the page and try again." },
+        { status: 400 }
+      );
     }
 
-    // 2. Minimum form fill time check (bots that submit in < 1.2s after load)
-    if (typeof body.formStartedAt === "number" && body.formStartedAt > 0) {
-      const elapsedMs = Date.now() - body.formStartedAt;
-      if (elapsedMs >= 0 && elapsedMs < 1200) {
-        return NextResponse.json({ success: true });
-      }
-    }
-
-    // 3. Extract and sanitize inputs
+    // 2. Extract and sanitize inputs
     const name = typeof body.name === "string" ? stripHeaderBreaks(body.name) : "";
-    const email = typeof body.email === "string" ? stripHeaderBreaks(body.email).toLowerCase() : "";
+    const email =
+      typeof body.email === "string" ? stripHeaderBreaks(body.email).toLowerCase() : "";
     const business =
       typeof body.business === "string" && body.business.trim().length > 0
         ? stripHeaderBreaks(body.business)
@@ -120,8 +128,13 @@ export async function POST(req: NextRequest) {
         : "General Inquiry";
     const message = typeof body.message === "string" ? body.message.trim() : "";
 
-    // 4. Validate required fields & length limits
+    // 3. Validate required fields & length limits
     if (!name || !email || !message) {
+      console.warn("[Contact API] Validation failed: missing required fields", {
+        hasName: Boolean(name),
+        hasEmail: Boolean(email),
+        hasMessage: Boolean(message),
+      });
       return NextResponse.json(
         { error: "Please fill out your name, email address, and project details." },
         { status: 400 }
@@ -165,16 +178,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 5. Practical spam check: reject messages stuffed with 5+ URLs
+    // 4. Practical spam check: reject messages stuffed with 5+ URLs
     const urlMatches = message.match(/https?:\/\/[^\s]+/gi);
     if (urlMatches && urlMatches.length >= 5) {
+      console.warn("[Contact API] Blocked message containing 5+ URLs.");
       return NextResponse.json(
         { error: "Please reduce the number of links in your message." },
         { status: 400 }
       );
     }
 
-    // 6. Send email via Resend
+    // 5. Send email via Resend
     const resend = new Resend(apiKey);
 
     const safeName = escapeHtml(name);
@@ -238,6 +252,10 @@ export async function POST(req: NextRequest) {
       </div>
     `;
 
+    console.info(
+      `[Contact API] Sending email via Resend from "${SENDER_EMAIL}" to "${RECIPIENT_EMAIL}" (replyTo: "${email}")`
+    );
+
     const { data, error: resendError } = await resend.emails.send({
       from: SENDER_EMAIL,
       to: [RECIPIENT_EMAIL],
@@ -247,17 +265,26 @@ export async function POST(req: NextRequest) {
       html: htmlContent,
     });
 
-    if (resendError) {
-      console.error("Resend API Error:", resendError);
+    if (resendError || !data?.id) {
+      console.error("[Contact API] Resend rejected email submission:", {
+        name: resendError?.name,
+        message: resendError?.message,
+        statusCode: (resendError as { statusCode?: number } | null)?.statusCode,
+      });
       return NextResponse.json(
-        { error: "Unable to send your message right now. Please try again or email lexi.codes.dev@gmail.com directly." },
+        {
+          error:
+            resendError?.message ||
+            "Unable to send your message right now. Please try again or email lexi.codes.dev@gmail.com directly.",
+        },
         { status: 502 }
       );
     }
 
-    return NextResponse.json({ success: true, id: data?.id });
+    console.info(`[Contact API] Email accepted by Resend. Message ID: ${data.id}`);
+    return NextResponse.json({ success: true, id: data.id }, { status: 200 });
   } catch (err: unknown) {
-    console.error("Contact Route Unexpected Error:", err);
+    console.error("[Contact API] Unexpected server error:", err);
     return NextResponse.json(
       { error: "An unexpected server error occurred. Please try again later." },
       { status: 500 }

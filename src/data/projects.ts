@@ -51,7 +51,6 @@ export const projects: Project[] = [
         category: "Custom Web Application & UI/UX",
         description: "Designed and engineered a real-time court rotation and lineup web application built for coaches on the sidelines. Turns complex rotation rules into an intuitive, touch-friendly interface across phones, tablets, and desktops.",
         tech: ["Web App Design", "React", "Next.js", "TypeScript", "Interactive UX"],
-        github: "https://github.com/abara02",
         link: "https://volleytrack.net/",
         image: "/projects/volleytrack-main.png",
         objectPosition: "center 15%",

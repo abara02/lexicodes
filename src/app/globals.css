@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
-:root {
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root,
+html.dark {
   --background: #0c0a09;
-  /* Deeper, more modern dark background */
+  /* Deeper, modern dark background */
   --foreground: #f5f5f4;
   /* Stone 100 */
   --primary: #a78bfa;
@@ -12,33 +15,33 @@
   /* Stone 300 */
   --muted: #a8a29e;
   /* Stone 400 */
+  --accent: #a78bfa;
   --card-bg: #1c1917;
   /* Stone 900 */
   --border: #292524;
   /* Stone 800 */
-  --ring: rgba(167, 139, 250, 0.1);
+  --ring: rgba(167, 139, 250, 0.15);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #fdfaf6;
-    /* pearl beige */
-    --foreground: #1c1917;
-    /* Stone 900 */
-    --primary: #7c3aed;
-    /* Violet */
-    --primary-hover: #6d28d9;
-    --secondary: #57534e;
-    /* Stone 600 */
-    --muted: #78716c;
-    /* Stone 500 */
-    --accent: #a78bfa;
-    /* Soft Lavender */
-    --card-bg: #ffffff;
-    --border: #e7e5e4;
-    /* Stone 200 */
-    --ring: rgba(124, 58, 237, 0.1);
-  }
+html.light {
+  --background: #faf8f5;
+  /* Soft warm off-white */
+  --foreground: #18181b;
+  /* Deep charcoal / Zinc 900 */
+  --primary: #7c3aed;
+  /* Vibrant Violet 600 for accessible contrast on light backgrounds */
+  --primary-hover: #6d28d9;
+  /* Violet 700 */
+  --secondary: #3f3f46;
+  /* Zinc 700 */
+  --muted: #71717a;
+  /* Zinc 500 */
+  --accent: #8b5cf6;
+  --card-bg: #ffffff;
+  /* Pure white cards */
+  --border: #e4e2dd;
+  /* Soft warm border */
+  --ring: rgba(124, 58, 237, 0.12);
 }
 
 @theme inline {
@@ -56,22 +59,22 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .glass {
-  background: rgba(253, 250, 246, 0.6);
+  background: rgba(250, 248, 245, 0.75);
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .dark .glass {
-  background: rgba(12, 10, 9, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(12, 10, 9, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @layer utilities {

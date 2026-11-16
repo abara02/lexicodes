@@ -243,14 +243,22 @@ const structuredData = {
   ],
 };
 
+const themeInitScript = `(function(){try{var s=localStorage.getItem('lexicodes-theme');var t=s==='light'?'light':'dark';var r=document.documentElement;if(t==='light'){r.classList.remove('dark');r.classList.add('light');r.style.colorScheme='light';}else{r.classList.remove('light');r.classList.add('dark');r.style.colorScheme='dark';}}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark" style={{ colorScheme: "dark" }}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="scroll-smooth dark"
+      style={{ colorScheme: "dark" }}
+    >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

@@ -204,7 +204,7 @@ export default function Home() {
               <div className="space-y-5">
                 <h1 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-bold tracking-tight font-outfit text-foreground leading-[1.06]">
                   Beautiful Websites.{" "}
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-300 to-violet-400">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-600 to-violet-600 dark:from-primary dark:via-purple-300 dark:to-violet-400">
                     Built for Your Business.
                   </span>
                 </h1>
@@ -221,7 +221,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
                 <a
                   href="#contact"
-                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-primary text-stone-950 rounded-2xl hover:bg-primary-hover transition-all duration-300 font-bold shadow-2xl shadow-primary/25 group"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-primary text-white dark:text-stone-950 rounded-2xl hover:bg-primary-hover transition-all duration-300 font-bold shadow-2xl shadow-primary/25 group"
                 >
                   <span className="text-base sm:text-lg">Get a Free Quote</span>
                   <ArrowRight
@@ -243,7 +243,7 @@ export default function Home() {
                   <UserCheck size={20} className="text-primary shrink-0" />
                   <span>
                     <strong className="text-foreground">Independently owned</strong> &bull; CT Based
-                    &bull; Ongoing support &bull; Honest pricing
+                    &bull; Ongoing support &bull; Fair pricing
                   </span>
                 </div>
               </div>
@@ -256,12 +256,18 @@ export default function Home() {
                 <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
 
                 {/* Brand Logo Showcase */}
-                <div className="relative z-10 rounded-2xl bg-stone-950/90 border border-border p-6 mb-5 flex flex-col items-center justify-center text-center">
+                <div className="relative z-10 rounded-2xl bg-stone-50 dark:bg-stone-950/90 border border-border p-6 mb-5 flex flex-col items-center justify-center text-center">
                   <img
                     src="/logo-dark.png"
                     alt="LexiCodes Digital — Custom Web Design & Development in Connecticut"
                     decoding="async"
-                    className="w-full max-w-[330px] h-auto object-contain"
+                    className="hidden dark:block w-full max-w-[330px] h-auto object-contain"
+                  />
+                  <img
+                    src="/logo.png"
+                    alt="LexiCodes Digital — Custom Web Design & Development in Connecticut"
+                    decoding="async"
+                    className="block dark:hidden w-full max-w-[330px] h-auto object-contain"
                   />
                   <p className="mt-4 text-xs sm:text-sm font-bold text-primary tracking-wide">
                     Modern websites. Personal service. Built for your business.
@@ -294,9 +300,9 @@ export default function Home() {
                       href="https://www.sunsetmeadowvineyards.com/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group rounded-2xl bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
+                      className="group rounded-2xl bg-stone-50/90 dark:bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
                     >
-                      <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-900">
+                      <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-200 dark:bg-stone-900">
                         <img
                           src="/projects/sunset-meadow.png"
                           alt="Sunset Meadow Vineyards mobile-friendly winery e-commerce website in Goshen, CT"
@@ -322,9 +328,9 @@ export default function Home() {
                       href="https://www.possumqueenfoundation.org/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group rounded-2xl bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
+                      className="group rounded-2xl bg-stone-50/90 dark:bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
                     >
-                      <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-900">
+                      <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-200 dark:bg-stone-900">
                         <img
                           src="/projects/possum-queen.jpg"
                           alt="The Possum Queen Foundation mobile-friendly nonprofit website in Litchfield, CT"
@@ -354,7 +360,7 @@ export default function Home() {
       </section>
 
       {/* Independent Studio vs. Big Agency Section */}
-      <section className="py-20 border-t border-border/60 bg-stone-950/50">
+      <section className="py-20 border-t border-border/60 bg-stone-100/70 dark:bg-stone-950/50">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center space-y-5 mb-14">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-bold uppercase tracking-widest">
@@ -446,7 +452,7 @@ export default function Home() {
                   }`}
                 >
                   {tier.popular && (
-                    <div className="absolute -top-4 right-8 px-4 py-1.5 rounded-full bg-primary text-stone-950 text-xs font-extrabold uppercase tracking-widest shadow-lg shadow-primary/30">
+                    <div className="absolute -top-4 right-8 px-4 py-1.5 rounded-full bg-primary text-white dark:text-stone-950 text-xs font-extrabold uppercase tracking-widest shadow-lg shadow-primary/30">
                       Most popular
                     </div>
                   )}
@@ -515,7 +521,7 @@ export default function Home() {
                         <button
                           type="button"
                           onClick={() => toggleTier(tier.tier)}
-                          className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-950/70 border border-border hover:border-primary/50 text-xs sm:text-sm font-bold text-primary transition-all group cursor-pointer"
+                          className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-100 dark:bg-stone-950/70 border border-border hover:border-primary/50 text-xs sm:text-sm font-bold text-primary transition-all group cursor-pointer"
                         >
                           <span>
                             {isExpanded ? "Show fewer features" : "See all included features"}
@@ -536,8 +542,8 @@ export default function Home() {
                       href="#contact"
                       className={`w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 ${
                         tier.popular
-                          ? "bg-primary text-stone-950 hover:bg-primary-hover shadow-xl shadow-primary/20"
-                          : "bg-stone-900 text-foreground border border-border hover:border-primary hover:text-primary"
+                          ? "bg-primary text-white dark:text-stone-950 hover:bg-primary-hover shadow-xl shadow-primary/20"
+                          : "bg-stone-100 dark:bg-stone-900 text-foreground border border-border hover:border-primary hover:text-primary"
                       }`}
                     >
                       <span>Get Started with {tier.tier}</span>
@@ -577,7 +583,7 @@ export default function Home() {
                 </p>
 
                 {/* Additional Website Work Callout */}
-                <div className="mt-6 p-6 rounded-2xl bg-stone-950/80 border border-primary/30 space-y-2">
+                <div className="mt-6 p-6 rounded-2xl bg-stone-100/80 dark:bg-stone-950/80 border border-primary/30 space-y-2">
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-sm font-bold text-foreground">
                       Additional Website Work
@@ -605,7 +611,7 @@ export default function Home() {
                     {hostingFeatures.map((item) => (
                       <div
                         key={item}
-                        className="flex items-start gap-3 p-3.5 rounded-xl bg-stone-950/50 border border-border/60 text-sm text-secondary font-medium"
+                        className="flex items-start gap-3 p-3.5 rounded-xl bg-stone-100/60 dark:bg-stone-950/50 border border-border/60 text-sm text-secondary font-medium"
                       >
                         <CheckCircle2 size={18} className="text-primary shrink-0 mt-0.5" />
                         <span>{item}</span>
@@ -621,7 +627,7 @@ export default function Home() {
                   </p>
                   <a
                     href="#contact"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-stone-900 border border-border hover:border-primary hover:text-primary text-foreground font-bold text-sm transition-all shrink-0"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-border hover:border-primary hover:text-primary text-foreground font-bold text-sm transition-all shrink-0"
                   >
                     <span>Inquire About Maintenance</span>
                     <ArrowRight size={16} />
@@ -634,7 +640,7 @@ export default function Home() {
       </section>
 
       {/* Portfolio / My Work Section */}
-      <section id="projects" className="py-24 lg:py-32 border-t border-border/60 bg-stone-950/40">
+      <section id="projects" className="py-24 lg:py-32 border-t border-border/60 bg-stone-100/60 dark:bg-stone-950/40">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
             <SectionHeader
@@ -673,7 +679,7 @@ export default function Home() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-stone-950 transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/15 border border-primary/25 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white dark:group-hover:text-stone-950 transition-colors duration-300">
                       <item.icon size={24} />
                     </div>
                     <span className="text-3xl font-extrabold font-outfit text-primary/35 group-hover:text-primary/60 transition-colors">
@@ -692,7 +698,7 @@ export default function Home() {
       </section>
 
       {/* About Section (Founder & Personal Approach) */}
-      <section id="about" className="py-24 lg:py-32 border-t border-border/60 bg-stone-950/40">
+      <section id="about" className="py-24 lg:py-32 border-t border-border/60 bg-stone-100/60 dark:bg-stone-950/40">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <SectionHeader title="Meet Alexis — Your Designer & Developer" />
@@ -787,13 +793,13 @@ export default function Home() {
                   aria-label="Email Alexis Baranauskas at lexi.codes.dev@gmail.com"
                 >
                   <CardContainer className="w-full">
-                    <CardBody className="h-auto w-full p-8 sm:p-10 rounded-[2.5rem] border border-stone-800 bg-gradient-to-br from-stone-900/95 to-black/80 backdrop-blur-3xl shadow-2xl flex flex-col items-center text-center relative overflow-hidden group/card hover:border-primary/40 transition-all duration-500">
-                      <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-primary/10 rounded-full blur-[80px] -mr-24 -mt-24 pointer-events-none" />
-                      <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none" />
+                    <CardBody className="h-auto w-full p-8 sm:p-10 rounded-[2.5rem] border border-border dark:border-primary/25 bg-gradient-to-br from-white via-purple-50/40 to-stone-100 dark:from-stone-950 dark:via-[#1c1235] dark:to-[#0c0a09] backdrop-blur-3xl shadow-2xl flex flex-col items-center text-center relative overflow-hidden group/card hover:border-primary/50 transition-all duration-500">
+                      <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-primary/15 rounded-full blur-[80px] -mr-24 -mt-24 pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 w-[220px] h-[220px] bg-purple-600/15 rounded-full blur-[70px] -ml-20 -mb-20 pointer-events-none" />
 
                       <CardItem translateZ="50" className="w-full relative z-10 flex flex-col items-center">
                         <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full border-2 border-dashed border-primary/40 p-3 flex items-center justify-center mb-6">
-                          <div className="w-full h-full rounded-full overflow-hidden bg-stone-800 shadow-inner">
+                          <div className="w-full h-full rounded-full overflow-hidden bg-stone-200 dark:bg-stone-800 shadow-inner">
                             <img
                               src="/profile.png"
                               alt="Alexis Baranauskas — Freelance Web Designer and Developer in Litchfield County, Connecticut"
@@ -816,7 +822,7 @@ export default function Home() {
                       </CardItem>
 
                       <CardItem translateZ="60" className="w-full relative z-10 text-left">
-                        <div className="p-6 rounded-2xl bg-stone-950/80 border border-border">
+                        <div className="p-6 rounded-2xl bg-stone-100/80 dark:bg-stone-950/80 border border-border">
                           <div className="flex items-center gap-3 mb-3">
                             <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
                               <GraduationCap size={22} />
@@ -880,7 +886,7 @@ export default function Home() {
                       rel={item.label !== "Email Me Directly" ? "noopener noreferrer" : undefined}
                       className="flex items-center group"
                     >
-                      <div className="p-4 rounded-2xl bg-stone-900 border border-border text-foreground group-hover:bg-primary group-hover:text-stone-950 transition-all duration-300">
+                      <div className="p-4 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-border text-foreground group-hover:bg-primary group-hover:text-white dark:group-hover:text-stone-950 transition-all duration-300">
                         <item.icon size={22} />
                       </div>
                       <div className="ml-5">
@@ -896,7 +902,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="lg:col-span-7 bg-stone-900/60 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
+              <div className="lg:col-span-7 bg-stone-100/70 dark:bg-stone-900/60 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
@@ -963,13 +969,13 @@ export default function Home() {
                   </div>
 
                   {success && (
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
+                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-700 dark:text-green-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
                       Thanks for reaching out! Your message came straight to my inbox and I’ll get
                       back to you soon.
                     </div>
                   )}
                   {error && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
+                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-600 dark:text-red-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
                       {error}
                     </div>
                   )}
@@ -985,7 +991,7 @@ export default function Home() {
                         type="text"
                         maxLength={100}
                         disabled={isSubmitting}
-                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         placeholder="Enter Your Name"
                       />
                     </div>
@@ -999,7 +1005,7 @@ export default function Home() {
                         type="email"
                         maxLength={254}
                         disabled={isSubmitting}
-                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         placeholder="jane@yourbusiness.com"
                       />
                     </div>
@@ -1015,7 +1021,7 @@ export default function Home() {
                         type="text"
                         maxLength={150}
                         disabled={isSubmitting}
-                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         placeholder="e.g. Main Street Bakery"
                       />
                     </div>
@@ -1026,7 +1032,7 @@ export default function Home() {
                       <select
                         name="serviceType"
                         disabled={isSubmitting}
-                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         defaultValue="Website Design & Development"
                       >
                         <option value="Website Design & Development">
@@ -1053,7 +1059,7 @@ export default function Home() {
                       minLength={5}
                       maxLength={5000}
                       disabled={isSubmitting}
-                      className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
+                      className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
                       placeholder="What does your business do, and what would you love your new or refreshed website to accomplish?"
                     />
                   </div>
@@ -1061,10 +1067,10 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-5 bg-primary text-stone-950 rounded-2xl font-bold text-lg hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full py-5 bg-primary text-white dark:text-stone-950 rounded-2xl font-bold text-lg hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {isSubmitting ? (
-                      <div className="w-6 h-6 border-2 border-stone-950/30 border-t-stone-950 rounded-full animate-spin" />
+                      <div className="w-6 h-6 border-2 border-white/30 border-t-white dark:border-stone-950/30 dark:border-t-stone-950 rounded-full animate-spin" />
                     ) : (
                       <>
                         <Send
@@ -1091,7 +1097,14 @@ export default function Home() {
               alt="LexiCodes Digital — Connecticut Web Design & Development"
               loading="lazy"
               decoding="async"
-              className="h-9 w-auto object-contain"
+              className="hidden dark:block h-9 w-auto object-contain"
+            />
+            <img
+              src="/logo.png"
+              alt="LexiCodes Digital — Connecticut Web Design & Development"
+              loading="lazy"
+              decoding="async"
+              className="block dark:hidden h-9 w-auto object-contain"
             />
             <p className="text-muted text-xs">
               &copy; {new Date().getFullYear()} LexiCodes Digital — Alexis Baranauskas. All rights

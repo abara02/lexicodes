@@ -50,7 +50,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
             <div className="absolute top-1/2 -left-4 xl:-left-20 z-20 -translate-y-1/2 hidden md:block">
                 <button
                     onClick={prevStep}
-                    className="p-5 bg-background border border-border rounded-full hover:bg-primary hover:text-stone-950 transition-all shadow-2xl group"
+                    className="p-5 bg-card border border-border rounded-full hover:bg-primary hover:text-white dark:hover:text-stone-950 transition-all shadow-2xl group cursor-pointer"
                     aria-label="Previous project"
                 >
                     <ChevronLeft className="w-7 h-7 group-hover:scale-110 transition-transform" />
@@ -60,7 +60,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
             <div className="absolute top-1/2 -right-4 xl:-right-20 z-20 -translate-y-1/2 hidden md:block">
                 <button
                     onClick={nextStep}
-                    className="p-5 bg-background border border-border rounded-full hover:bg-primary hover:text-stone-950 transition-all shadow-2xl group"
+                    className="p-5 bg-card border border-border rounded-full hover:bg-primary hover:text-white dark:hover:text-stone-950 transition-all shadow-2xl group cursor-pointer"
                     aria-label="Next project"
                 >
                     <ChevronRight className="w-7 h-7 group-hover:scale-110 transition-transform" />
@@ -109,7 +109,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 } flex flex-col h-[510px] cursor-grab active:cursor-grabbing`}
                             >
                                 {/* Image Section */}
-                                <div className="h-64 relative bg-stone-900 overflow-hidden group/img">
+                                <div className="h-64 relative bg-stone-100 dark:bg-stone-900 overflow-hidden group/img">
                                     {project.image ? (
                                         <img
                                             src={project.image}
@@ -124,7 +124,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                         />
                                     ) : (
                                         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent flex items-center justify-center">
-                                            <Code2 className="text-stone-700" size={80} strokeWidth={0.5} />
+                                            <Code2 className="text-stone-400 dark:text-stone-700" size={80} strokeWidth={0.5} />
                                         </div>
                                     )}
 
@@ -143,7 +143,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onPointerDown={(e) => e.stopPropagation()}
-                                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-stone-950/90 backdrop-blur-md text-foreground border border-white/10 rounded-full hover:bg-primary hover:text-stone-950 transition-all shadow-lg text-xs font-bold"
+                                                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/95 dark:bg-stone-950/90 backdrop-blur-md text-foreground border border-border dark:border-white/10 rounded-full hover:bg-primary hover:text-white dark:hover:text-stone-950 transition-all shadow-lg text-xs font-bold"
                                                     >
                                                         <span>Visit Live Site</span>
                                                         <ExternalLink size={14} />
@@ -155,7 +155,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         onPointerDown={(e) => e.stopPropagation()}
-                                                        className="p-2.5 bg-stone-950/90 backdrop-blur-md text-foreground border border-white/10 rounded-full hover:bg-primary hover:text-stone-950 transition-all shadow-lg"
+                                                        className="p-2.5 bg-white/95 dark:bg-stone-950/90 backdrop-blur-md text-foreground border border-border dark:border-white/10 rounded-full hover:bg-primary hover:text-white dark:hover:text-stone-950 transition-all shadow-lg"
                                                         aria-label="View source on GitHub"
                                                     >
                                                         <Github size={16} />
@@ -168,7 +168,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     onPointerDown={(e) => e.stopPropagation()}
-                                                    className="flex items-center space-x-2 px-4 py-2 bg-primary text-stone-950 rounded-full text-[11px] font-black uppercase tracking-wider shadow-lg transform hover:scale-105 transition-transform"
+                                                    className="flex items-center space-x-2 px-4 py-2 bg-primary text-white dark:text-stone-950 rounded-full text-[11px] font-black uppercase tracking-wider shadow-lg transform hover:scale-105 transition-transform"
                                                 >
                                                     <PlayCircle size={15} />
                                                     <span>Watch Demos</span>

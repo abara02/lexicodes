@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { name: "Services", href: "#services" },
@@ -28,7 +29,7 @@ export default function Navigation() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
         scrolled
-          ? "bg-background/90 backdrop-blur-xl py-3 shadow-lg shadow-black/20 border-border"
+          ? "bg-background/90 backdrop-blur-xl py-3 shadow-lg shadow-black/5 dark:shadow-black/20 border-border"
           : "bg-background/70 backdrop-blur-md py-4 border-transparent"
       }`}
     >
@@ -42,7 +43,13 @@ export default function Navigation() {
             src="/logo-dark.png"
             alt="LexiCodes Digital — Connecticut Web Design & Development"
             decoding="async"
-            className="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+            className="hidden dark:block h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+          <img
+            src="/logo.png"
+            alt="LexiCodes Digital — Connecticut Web Design & Development"
+            decoding="async"
+            className="block dark:hidden h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </a>
 
@@ -52,28 +59,34 @@ export default function Navigation() {
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-semibold tracking-wide text-secondary/85 hover:text-primary transition-colors"
+              className="text-sm font-semibold tracking-wide text-secondary hover:text-primary transition-colors"
             >
               {link.name}
             </a>
           ))}
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-stone-950 font-bold text-sm hover:bg-primary-hover transition-all duration-300 shadow-lg shadow-primary/20"
-          >
-            <span>Get a Free Quote</span>
-            <ArrowUpRight size={16} />
-          </a>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-white dark:text-stone-950 font-bold text-sm hover:bg-primary-hover transition-all duration-300 shadow-lg shadow-primary/20"
+            >
+              <span>Get a Free Quote</span>
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden text-foreground hover:text-primary transition-colors p-2"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle Menu"
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Mobile Controls (Theme Toggle + Hamburger Button) */}
+        <div className="flex items-center gap-2.5 lg:hidden">
+          <ThemeToggle />
+          <button
+            className="text-foreground hover:text-primary transition-colors p-2"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -98,7 +111,7 @@ export default function Navigation() {
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-stone-950 font-bold text-lg hover:bg-primary-hover transition-all shadow-xl shadow-primary/20"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-white dark:text-stone-950 font-bold text-lg hover:bg-primary-hover transition-all shadow-xl shadow-primary/20"
             >
               <span>Get a Free Quote</span>
               <ArrowUpRight size={20} />

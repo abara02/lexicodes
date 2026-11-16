@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/layout/Navigation";
@@ -17,6 +17,10 @@ const outfit = Outfit({
 
 const SITE_URL = "https://lexicodesdigital.com";
 
+export const viewport: Viewport = {
+  themeColor: "#0c0a09",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -30,6 +34,11 @@ export const metadata: Metadata = {
   creator: "Alexis Baranauskas — LexiCodes Digital",
   publisher: "LexiCodes Digital",
   category: "Web Design & Development",
+  icons: {
+    icon: [{ url: "/icon-v3.png?v=3", type: "image/png", sizes: "512x512" }],
+    shortcut: ["/icon-v3.png?v=3"],
+    apple: [{ url: "/apple-icon-v3.png?v=3", sizes: "180x180", type: "image/png" }],
+  },
   keywords: [
     "Web design Connecticut",
     "Connecticut web designer",
@@ -91,9 +100,9 @@ export const metadata: Metadata = {
       "Custom web design, WordPress, Wix, e-commerce, and SEO services for small businesses in Litchfield County and across Connecticut. Get a free quote.",
     images: [
       {
-        url: "/logo-dark.png",
-        width: 956,
-        height: 138,
+        url: "/og-image.png?v=3",
+        width: 1200,
+        height: 630,
         alt: "LexiCodes Digital — Custom Web Design & Development in Connecticut",
       },
     ],
@@ -103,7 +112,7 @@ export const metadata: Metadata = {
     title: "Web Design in Connecticut | LexiCodes Digital",
     description:
       "Custom web design, WordPress, Wix, e-commerce, and SEO services for small businesses in Litchfield County and across Connecticut. Get a free quote.",
-    images: ["/logo-dark.png"],
+    images: ["/og-image.png?v=3"],
   },
 };
 

@@ -14,8 +14,9 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Alexis | Software Engineer & Full Stack Developer",
-  description: "Portfolio of Alexis, a BS Computer Science graduate (2025) specializing in Full Stack Engineering, React, and Next.js.",
+  title: "LexiCodes Digital | Independent Web Design & Development",
+  description:
+    "LexiCodes Digital is an independently run web design and development studio specializing in fast, mobile-responsive websites, e-commerce solutions, and custom CMS development. No big agency, no middlemen — just thoughtful design, dependable development, and one-on-one support.",
 };
 
 export default function RootLayout({
@@ -24,17 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth dark" style={{ colorScheme: 'dark' }}>
+    <html lang="en" className="scroll-smooth dark" style={{ colorScheme: "dark" }}>
       <body
         className={`${inter.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground transition-colors duration-300`}
       >
         <Navigation />
-        <main className="min-h-screen">
-          {children}
-        </main>
+        <main className="min-h-screen">{children}</main>
       </body>
     </html>
   );
 }
-
-

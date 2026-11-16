@@ -2,40 +2,41 @@
 
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export async function sendEmail(formData: {
+  name: string;
+  email: string;
+  business?: string;
+  serviceType?: string;
+  message: string;
+}) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return { error: "API key is missing. Please set RESEND_API_KEY in environment variables." };
+  }
 
-export async function sendEmail(formData: { name: string; email: string; message: string }) {
-    if (!process.env.RESEND_API_KEY) {
-        return { error: "API key is missing. Please set RESEND_API_KEY in environment variables." };
+  const { name, email, business = "Not specified", serviceType = "General Inquiry", message } = formData;
+
+  if (!name || !email || !message) {
+    return { error: "Please fill out all required fields." };
+  }
+
+  try {
+    const resend = new Resend(apiKey);
+    const { data, error } = await resend.emails.send({
+      from: "LexiCodes Digital <contact@lexicodesdigital.com>",
+      to: ["lexi.codes.dev@gmail.com"],
+      subject: `New Quote Request: ${name} (${serviceType})`,
+      replyTo: email,
+      text: `Name: ${name}\nEmail: ${email}\nBusiness/Website: ${business}\nSelected Service: ${serviceType}\n\nMessage:\n${message}`,
+    });
+
+    if (error) {
+      return { error: error.message || "Failed to send email." };
     }
 
-    const { name, email, message } = formData;
-
-    if (!name || !email || !message) {
-        return { error: "Please fill out all fields." };
-    }
-
-    try {
-        const data = await resend.emails.send({
-            from: "Portfolio Contact <onboarding@resend.dev>",
-            to: "lexi.codes.dev@gmail.com",
-            subject: `New Contact Form Message from ${name}`,
-            replyTo: email,
-            html: `
-        <div style="font-family: sans-serif; padding: 20px; color: #333;">
-          <h2 style="color: #6d28d9;">New Message from Portfolio</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <hr style="border: 1px solid #eee;" />
-          <p><strong>Message:</strong></p>
-          <p style="white-space: pre-wrap;">${message}</p>
-        </div>
-      `,
-        });
-
-        return { success: true, data };
-    } catch (error: any) {
-        console.error("Resend Error:", error);
-        return { error: error.message || "Failed to send email." };
-    }
+    return { success: true, data };
+  } catch (err: unknown) {
+    console.error("Resend Error:", err);
+    return { error: "Failed to send email." };
+  }
 }

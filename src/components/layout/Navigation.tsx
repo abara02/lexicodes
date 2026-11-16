@@ -1,14 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
+  { name: "Services", href: "#services" },
+  { name: "My Work", href: "#projects" },
+  { name: "How It Works", href: "#process" },
   { name: "About Me", href: "#about" },
-  { name: "Portfolio", href: "#projects" },
-  { name: "Connect", href: "#contact" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Navigation() {
@@ -25,34 +26,50 @@ export default function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${scrolled ? "bg-background py-3 shadow-md border-border" : "bg-background py-5 border-transparent"
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-xl py-3 shadow-lg shadow-black/20 border-border"
+          : "bg-background/70 backdrop-blur-md py-4 border-transparent"
+      }`}
     >
-      <div className="w-full px-8 md:px-20 lg:px-32 flex justify-between items-center">
+      <div className="container mx-auto px-6 flex justify-between items-center">
         <a
           href="#home"
-          className="text-2xl font-bold font-outfit text-primary tracking-tighter hover:scale-105 transition-transform"
+          className="flex items-center group focus:outline-none"
+          aria-label="LexiCodes Digital Home"
         >
-          AB
+          <img
+            src="/logo-dark.png"
+            alt="LexiCodes Digital — Webdesign & Development"
+            className="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+          />
         </a>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-10">
+        <div className="hidden lg:flex items-center space-x-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-semibold tracking-wide hover:text-primary transition-colors text-secondary/80 hover:text-foreground"
+              className="text-sm font-semibold tracking-wide text-secondary/85 hover:text-primary transition-colors"
             >
               {link.name}
             </a>
           ))}
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary text-stone-950 font-bold text-sm hover:bg-primary-hover transition-all duration-300 shadow-lg shadow-primary/20"
+          >
+            <span>Get a Free Quote</span>
+            <ArrowUpRight size={16} />
+          </a>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-foreground hover:text-primary transition-colors"
+          className="lg:hidden text-foreground hover:text-primary transition-colors p-2"
           onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle Menu"
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -65,22 +82,29 @@ export default function Navigation() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "100vh" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden fixed inset-0 top-[60px] bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center space-y-8"
+            className="lg:hidden fixed inset-0 top-[65px] bg-background/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 px-6"
           >
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="text-2xl font-bold tracking-widest text-foreground hover:text-primary transition-colors"
+                className="text-2xl font-bold tracking-wider text-foreground hover:text-primary transition-colors"
               >
                 {link.name}
               </a>
             ))}
+            <a
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-primary text-stone-950 font-bold text-lg hover:bg-primary-hover transition-all shadow-xl shadow-primary/20"
+            >
+              <span>Get a Free Quote</span>
+              <ArrowUpRight size={20} />
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
     </nav>
   );
 }
-

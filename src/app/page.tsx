@@ -1,6 +1,21 @@
 "use client";
 
-import { ArrowRight, Mail, ExternalLink, Github, Send, Download, PlayCircle, Linkedin, User, GraduationCap, Code2, Calendar } from "lucide-react";
+import {
+  ArrowRight,
+  Mail,
+  ExternalLink,
+  Github,
+  Send,
+  Linkedin,
+  GraduationCap,
+  Wrench,
+  CheckCircle2,
+  UserCheck,
+  HeartHandshake,
+  DollarSign,
+  MessageSquareHeart,
+  ChevronDown,
+} from "lucide-react";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ProjectCarousel from "@/components/ui/ProjectCarousel";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
@@ -8,155 +23,769 @@ import { Vortex } from "@/components/ui/vortex";
 import { projects } from "@/data/projects";
 
 import { useState } from "react";
-import { sendEmail } from "@/app/actions/contact";
 
+const independentPromises = [
+  {
+    icon: UserCheck,
+    title: "No Big Agency, No Middlemen",
+    description:
+      "You won’t get sold by a smooth-talking salesperson and then handed off to a stranger. You work directly one-on-one with me from our very first conversation through launch day.",
+  },
+  {
+    icon: DollarSign,
+    title: "Fair Pricing, Built Around Your Business",
+    description:
+      "Every business is different, and your website should reflect that. I believe in honest, straightforward pricing that makes sense for your needs, without unnecessary features or hidden fees. My goal is to create a professional, high-quality website that's a worthwhile investment in your business's future.",
+  },
+  {
+    icon: MessageSquareHeart,
+    title: "Personal Service & Ongoing Care",
+    description:
+      "When you need a menu updated, a new page added, or a quick question answered, you don’t submit a ticket into a void. You reach out directly to me! The developer who built your site.",
+  },
+];
+
+const serviceTiers = [
+  {
+    tier: "TIER 01",
+    name: "Starter",
+    price: "$2,250",
+    billing: "starting at / one-time",
+    popular: false,
+    description:
+      "Perfect for small and local businesses looking for a clean, modern, professional online presence.",
+    features: [
+      "Up to 5 custom-designed pages",
+      "Fully mobile-responsive design",
+      "Basic on-page SEO setup",
+      "Social media links and integration",
+      "Basic website performance optimization",
+      "2 rounds of design revisions",
+      "Website testing and launch assistance",
+    ],
+    bonusTitle: null,
+    bonusDescription: null,
+  },
+  {
+    tier: "TIER 02",
+    name: "Growth & CMS",
+    price: "$3,500",
+    billing: "starting at / one-time",
+    popular: true,
+    description:
+      "Designed for growing businesses that need more flexibility, content management, and advanced functionality.",
+    features: [
+      "Up to 10 custom-designed pages",
+      "Everything included in Starter",
+      "CMS integration for easy content updates",
+      "Enhanced on-page SEO setup",
+      "Custom forms and integrations",
+      "3 rounds of design revisions",
+      "Up to 1 hour of personalized CMS training",
+    ],
+    bonusTitle: "1 Month of Support & Maintenance Included",
+    bonusDescription:
+      "Post-launch assistance and routine website maintenance within the included support scope.",
+  },
+  {
+    tier: "TIER 03",
+    name: "E-Commerce",
+    price: "$4,500",
+    billing: "starting at / one-time",
+    popular: false,
+    description:
+      "A complete online shopping experience designed to help your business sell products and manage orders with confidence.",
+    features: [
+      "Custom, mobile-responsive storefront design",
+      "CMS and e-commerce management integration",
+      "Product catalog setup for up to 20 products",
+      "Shopping cart and secure checkout integration",
+      "Payment gateway setup",
+      "Basic SEO and performance optimization",
+      "Inventory and order management configuration",
+      "Up to 2 hours of personalized store and CMS training",
+      "3 rounds of design revisions",
+      "Website testing and launch assistance",
+    ],
+    bonusTitle: "2 Months of Support & Maintenance Included",
+    bonusDescription:
+      "Additional post-launch assistance to help keep your new store running smoothly.",
+  },
+];
+
+const hostingFeatures = [
+  "Managed Website Hosting",
+  "Security Monitoring & Maintenance",
+  "Regular Website Backups",
+  "Website Performance Monitoring",
+  "Routine Website Updates & Upkeep",
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Let's Talk",
+    description:
+      "We'll start with a friendly conversation about your business, your goals, and what you need from your website. I'll help you find the right solution for your needs and budget.",
+  },
+  {
+    step: "02",
+    title: "Design & Planning",
+    description:
+      "I'll create a modern, thoughtful design tailored to your brand. We'll review the layout together and make revisions based on your feedback to fine-tune the details before development begins.",
+  },
+  {
+    step: "03",
+    title: "Development & Testing",
+    description:
+      "I'll bring your website to life with responsive design, optimized performance, and the functionality your business needs. Everything is carefully tested before launch.",
+  },
+  {
+    step: "04",
+    title: "Launch & Support",
+    description:
+      "Once everything is ready, I'll handle the launch and help you get comfortable with your new website. Ongoing hosting, maintenance, and support are also available.",
+  },
+];
 
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null as string | null);
+  const [formStartedAt] = useState(() => Date.now());
+  const [expandedTiers, setExpandedTiers] = useState<Record<string, boolean>>({});
+
+  const toggleTier = (tierKey: string) => {
+    setExpandedTiers((prev) => ({ ...prev, [tierKey]: !prev[tierKey] }));
+  };
+
   return (
     <div className="flex flex-col w-full">
-      {/* Hero / Home Section */}
-      <section id="home" className="min-h-screen flex items-center pt-12 md:pt-0 overflow-hidden bg-background">
+      {/* Hero Section */}
+      <section
+        id="home"
+        className="min-h-screen flex items-center pt-24 pb-16 lg:py-0 overflow-hidden bg-background"
+      >
         <Vortex
           backgroundColor="transparent"
           rangeY={800}
-          particleCount={250}
-          baseHue={255}
+          particleCount={220}
+          baseHue={262}
           rangeHue={25}
           baseSpeed={0.015}
           rangeSpeed={0.08}
-          className="w-full h-full flex items-center justify-center py-10 md:py-0"
+          className="w-full h-full flex items-center justify-center py-12 lg:py-24"
         >
-          <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-10 animate-in fade-in slide-in-from-left-8 duration-1000">
-              <div className="space-y-6">
-                <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold tracking-tight font-outfit text-foreground leading-[0.95]">
-                  Alexis<br />Baranauskas
+          <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+            {/* Left Column: Independent Studio Hero (matching uploaded mockup & copy) */}
+            <div className="lg:col-span-7 space-y-7 animate-in fade-in slide-in-from-left-8 duration-1000">
+              {/* Top Eyebrow */}
+              <div className="inline-flex items-center gap-2.5 text-primary text-xs sm:text-sm font-extrabold uppercase tracking-[0.18em]">
+                <span className="px-2.5 py-1 rounded-lg bg-primary/15 border border-primary/30 text-primary font-mono text-xs">
+                  &lt;/&gt;
+                </span>
+                <span>Independent Web Design &amp; Development</span>
+              </div>
+
+              {/* Headline & Subtext */}
+              <div className="space-y-5">
+                <h1 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-bold tracking-tight font-outfit text-foreground leading-[1.06]">
+                  Beautiful Websites.{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-300 to-violet-400">
+                    Built for Your Business.
+                  </span>
                 </h1>
-                <p className="max-w-xl text-xl md:text-2xl text-secondary leading-relaxed font-medium opacity-80">
-                  Full-stack developer, building clean,
-                  practical applications that solve real problems using modern web technologies.
+
+                <p className="max-w-2xl text-lg sm:text-xl text-secondary leading-relaxed font-medium">
+                  I design and develop modern, mobile-friendly websites, online stores, and custom
+                  web solutions that help <span className="text-foreground font-bold">YOUR</span>{" "}
+                  business stand out online. Every project is thoughtfully crafted with care,
+                  attention to detail, and friendly one-on-one support from start to finish.
                 </p>
               </div>
 
-              <div className="pt-8">
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-primary text-stone-950 rounded-2xl hover:bg-primary-hover transition-all duration-300 font-bold shadow-2xl shadow-primary/25 group"
+                >
+                  <span className="text-base sm:text-lg">Get a Free Quote</span>
+                  <ArrowRight
+                    size={20}
+                    className="group-hover:translate-x-1.5 transition-transform duration-300"
+                  />
+                </a>
                 <a
                   href="#projects"
-                  className="inline-flex items-center space-x-4 px-10 py-5 bg-primary text-white rounded-full hover:bg-primary-hover transition-all duration-300 font-bold shadow-2xl shadow-primary/20 group"
+                  className="inline-flex items-center justify-center space-x-3 px-8 py-4 bg-card/80 border border-primary/35 text-foreground rounded-2xl hover:border-primary hover:text-primary transition-all duration-300 font-bold"
                 >
-                  <span className="text-lg">View Portfolio</span>
-                  <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform duration-300" />
+                  <span className="text-base sm:text-lg">View My Work</span>
                 </a>
+              </div>
+
+              {/* Divider + Independent Ownership Strip */}
+              <div className="pt-5 border-t border-primary/20">
+                <div className="flex flex-wrap items-center gap-2.5 text-sm sm:text-base font-medium text-secondary">
+                  <UserCheck size={20} className="text-primary shrink-0" />
+                  <span>
+                    <strong className="text-foreground">Independently owned</strong> &bull; CT Based
+                    &bull; Ongoing support &bull; Honest pricing
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-300">
-              <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[450px] lg:h-[450px] rounded-full border-2 border-dashed border-primary/30 p-6 flex items-center justify-center">
-                <div className="w-full h-full rounded-full bg-stone-200/50 overflow-hidden relative shadow-inner">
+            {/* Right Column: Studio Brand Card & Live Small-Business Work */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-200">
+              <div className="w-full max-w-lg rounded-[2.5rem] bg-card/90 backdrop-blur-2xl border border-primary/25 p-7 sm:p-9 shadow-2xl shadow-primary/10 relative overflow-hidden">
+                <div className="absolute -top-20 -right-20 w-56 h-56 bg-primary/15 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Brand Logo Showcase */}
+                <div className="relative z-10 rounded-2xl bg-stone-950/90 border border-border p-6 mb-5 flex flex-col items-center justify-center text-center">
                   <img
-                    src="/profile.png"
-                    alt="Alexis Baranauskas"
-                    className="w-full h-full object-cover scale-105"
+                    src="/logo-dark.png"
+                    alt="LexiCodes Digital — Webdesign & Development"
+                    className="w-full max-w-[330px] h-auto object-contain"
                   />
+                  <p className="mt-4 text-xs sm:text-sm font-bold text-primary tracking-wide">
+                    Modern websites. Personal service. Built for your business.
+                  </p>
                 </div>
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-primary/10 rounded-full blur-2xl"></div>
-                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+
+                {/* Personal Studio Blurb */}
+                <p className="relative z-10 text-sm text-secondary leading-relaxed mb-5">
+                  At <strong className="text-foreground">LexiCodes Digital</strong>, I specialize in
+                  creating fast, mobile-responsive websites, e-commerce stores, and easy-to-manage
+                  CMS solutions for your business—with zero big-agency overhead.
+                </p>
+
+                {/* Featured Live Sites Preview */}
+                <div className="relative z-10 space-y-3.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                      Recent Client Websites
+                    </span>
+                    <a
+                      href="#projects"
+                      className="text-xs font-semibold text-secondary hover:text-primary transition-colors"
+                    >
+                      See all work &rarr;
+                    </a>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <a
+                      href="https://www.sunsetmeadowvineyards.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group rounded-2xl bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
+                    >
+                      <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-900">
+                        <img
+                          src="/projects/sunset-meadow.png"
+                          alt="Sunset Meadow Vineyards"
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <div>
+                          <p className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
+                            Sunset Meadow Vineyards
+                          </p>
+                          <p className="text-[11px] text-muted">E-Commerce &amp; WordPress CMS</p>
+                        </div>
+                        <ExternalLink
+                          size={14}
+                          className="text-muted group-hover:text-primary shrink-0"
+                        />
+                      </div>
+                    </a>
+
+                    <a
+                      href="https://www.crabbyals.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group rounded-2xl bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
+                    >
+                      <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-900">
+                        <img
+                          src="/projects/crabby-als.jpg"
+                          alt="Crabby Al's Seafood"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="flex items-center justify-between gap-2">
+                        <div>
+                          <p className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
+                            Crabby Al’s Seafood
+                          </p>
+                          <p className="text-[11px] text-muted">Restaurant Web Design</p>
+                        </div>
+                        <ExternalLink
+                          size={14}
+                          className="text-muted group-hover:text-primary shrink-0"
+                        />
+                      </div>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </Vortex>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-24 lg:py-32">
+      {/* Independent Studio vs. Big Agency Section */}
+      <section className="py-20 border-t border-border/60 bg-stone-950/50">
         <div className="container mx-auto px-6">
-          <div className="max-w-7xl mx-auto">
-            <SectionHeader
-              title="About Me"
-            />
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 mt-16 items-center">
-              <div className="lg:col-span-3 space-y-8 text-xl text-secondary leading-relaxed">
-                <p>
-                  I’m a software engineer who solves real-world problems with clean, intuitive software. I work across backend systems, APIs, and modern frontend interfaces, focusing on clarity and usability to build products people enjoy using and that help them get things done.
-                </p>
+          <div className="max-w-4xl mx-auto text-center space-y-5 mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-bold uppercase tracking-widest">
+              <HeartHandshake size={15} />
+              <span>Independently Owned &amp; Operated</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-bold font-outfit text-foreground tracking-tight">
+              Modern websites. Personal service.{" "}
+              <span className="text-primary">Built for your business.</span>
+            </h2>
+            <div className="space-y-4 text-lg sm:text-xl text-secondary leading-relaxed">
+              <p>
+                <strong className="text-foreground">LexiCodes Digital</strong> offers freelance web
+                design and development services specializing in fast, mobile-responsive websites,
+                e-commerce solutions, and custom CMS development.
+              </p>
+              <p>
+                As an independent web designer and developer, I take a personal, hands-on approach to
+                every project. Whether you&apos;re refreshing an outdated website or building
+                something completely new, I work directly with you to create a modern, professional
+                website tailored to your business&apos;s needs and goals.
+              </p>
+            </div>
+          </div>
 
-                <div>
-                  <h3 className="text-foreground font-bold mb-4">What I enjoy building</h3>
-                  <ul className="list-disc pl-5 space-y-3 text-lg">
-                    <li>Web and mobile applications that are practical, maintainable, and user focused</li>
-                    <li>Simple, responsive, and intentional frontend experiences that look great</li>
-                    <li>Backend systems and APIs designed to be stable, clear, maintainable, and built to scale</li>
-                  </ul>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {independentPromises.map((promise) => (
+              <div
+                key={promise.title}
+                className="rounded-[2rem] bg-card border border-border p-8 hover:border-primary/40 transition-all shadow-xl"
+              >
+                <div className="w-12 h-12 rounded-2xl bg-primary/15 text-primary flex items-center justify-center mb-6">
+                  <promise.icon size={24} />
+                </div>
+                <h3 className="text-xl font-bold font-outfit text-foreground mb-3">
+                  {promise.title}
+                </h3>
+                <p className="text-secondary text-sm sm:text-base leading-relaxed">
+                  {promise.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section id="services" className="py-24 lg:py-32 border-t border-border/60">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <SectionHeader title="Services" />
+            <p className="text-lg sm:text-xl text-secondary leading-relaxed mt-4">
+              Every business is unique, and your website should reflect that. At{" "}
+              <strong className="text-foreground">LexiCodes Digital</strong>, I offer personalized
+              web design and development solutions tailored to your goals, helping your business
+              stand out and grow online.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto items-start">
+            {serviceTiers.map((tier) => {
+              const isExpanded = !!expandedTiers[tier.tier];
+              const initialFeatures = tier.features.slice(0, 2);
+              const extraFeatures = tier.features.slice(2);
+
+              return (
+                <div
+                  key={tier.tier}
+                  className={`relative rounded-[2.5rem] p-8 sm:p-10 transition-all duration-300 flex flex-col justify-between shadow-2xl ${
+                    tier.popular
+                      ? "bg-gradient-to-b from-primary/15 via-card to-card border-2 border-primary/60 shadow-primary/10"
+                      : "bg-card border border-border hover:border-primary/40"
+                  }`}
+                >
+                  {tier.popular && (
+                    <div className="absolute -top-4 right-8 px-4 py-1.5 rounded-full bg-primary text-stone-950 text-xs font-extrabold uppercase tracking-widest shadow-lg shadow-primary/30">
+                      Most popular
+                    </div>
+                  )}
+
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xs font-extrabold uppercase tracking-[0.25em] text-primary">
+                        {tier.tier}
+                      </span>
+                    </div>
+
+                    <div className="flex items-baseline gap-3 mb-2">
+                      <span className="text-4xl sm:text-5xl font-extrabold font-outfit text-foreground tracking-tight">
+                        {tier.price}
+                      </span>
+                      <span className="text-sm font-semibold text-muted">{tier.billing}</span>
+                    </div>
+
+                    <p className="text-secondary text-base leading-relaxed mt-4 mb-8">
+                      {tier.description}
+                    </p>
+
+                    <div className="pt-6 border-t border-border/70">
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground mb-5">
+                        What&apos;s included
+                      </p>
+                      <ul className="space-y-3.5">
+                        {initialFeatures.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 text-sm sm:text-base text-secondary font-medium"
+                          >
+                            <CheckCircle2 size={18} className="text-primary shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+
+                        {isExpanded &&
+                          extraFeatures.map((item) => (
+                            <li
+                              key={item}
+                              className="flex items-start gap-3 text-sm sm:text-base text-secondary font-medium animate-in fade-in slide-in-from-top-2 duration-200"
+                            >
+                              <CheckCircle2 size={18} className="text-primary shrink-0 mt-0.5" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                      </ul>
+
+                      {isExpanded && tier.bonusTitle && (
+                        <div className="mt-5 p-5 rounded-2xl bg-primary/10 border border-primary/30 animate-in fade-in slide-in-from-top-2 duration-200">
+                          <p className="text-sm font-bold text-primary flex items-center gap-2 mb-1">
+                            <CheckCircle2 size={16} className="shrink-0" />
+                            <span>{tier.bonusTitle}</span>
+                          </p>
+                          <p className="text-xs sm:text-sm text-secondary leading-relaxed pl-6">
+                            {tier.bonusDescription}
+                          </p>
+                        </div>
+                      )}
+
+                      {extraFeatures.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => toggleTier(tier.tier)}
+                          className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-950/70 border border-border hover:border-primary/50 text-xs sm:text-sm font-bold text-primary transition-all group cursor-pointer"
+                        >
+                          <span>
+                            {isExpanded ? "Show fewer features" : "See all included features"}
+                          </span>
+                          <ChevronDown
+                            size={18}
+                            className={`transition-transform duration-300 ${
+                              isExpanded ? "rotate-180" : "group-hover:translate-y-0.5"
+                            }`}
+                          />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="pt-8 mt-8 border-t border-border/60">
+                    <a
+                      href="#contact"
+                      className={`w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 ${
+                        tier.popular
+                          ? "bg-primary text-stone-950 hover:bg-primary-hover shadow-xl shadow-primary/20"
+                          : "bg-stone-900 text-foreground border border-border hover:border-primary hover:text-primary"
+                      }`}
+                    >
+                      <span>Get Started with {tier.tier}</span>
+                      <ArrowRight size={18} />
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Website Hosting & Maintenance + Additional Website Work */}
+          <div className="max-w-7xl mx-auto mt-12 rounded-[2.5rem] bg-card border border-border p-8 sm:p-12 shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              {/* Left: Hosting & Maintenance Overview */}
+              <div className="lg:col-span-5 space-y-5">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 border border-primary/25 text-primary text-xs font-extrabold uppercase tracking-widest">
+                  <Wrench size={14} />
+                  <span>Ongoing Care &amp; Support</span>
                 </div>
 
-                <div>
-                  <h3 className="text-foreground font-bold mb-4">Projects & Experience</h3>
-                  <div className="space-y-4">
-                    <p>
-                      Some of my best ideas come from firsthand frustration. I built a volleyball rotation tracker after repeatedly running into coordination issues while coaching—turning a real workflow problem into a practical software solution.
-                    </p>
-                    <div>
-                      <p className="mb-2">During my internship at <a href="https://www.mykleo.ai/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">mykleo.ai</a>, I contributed across the stack by:</p>
-                      <ul className="list-disc pl-5 space-y-2 text-lg">
-                        <li>Improving backend stability</li>
-                        <li>Refining UI/UX flows</li>
-                        <li>Creating onboarding content to help users understand the product faster and with less guesswork</li>
-                      </ul>
+                <h3 className="text-2xl sm:text-3xl font-bold font-outfit text-foreground">
+                  Website Hosting &amp; Maintenance
+                </h3>
+
+                <div className="flex items-baseline gap-2.5">
+                  <span className="text-4xl sm:text-5xl font-extrabold font-outfit text-foreground tracking-tight">
+                    $150
+                  </span>
+                  <span className="text-sm font-semibold text-muted">/ month, starting at</span>
+                </div>
+
+                <p className="text-secondary text-base leading-relaxed">
+                  Keep your website secure, updated, and running smoothly with reliable hosting and
+                  ongoing maintenance. I&apos;ll handle the technical upkeep so you can focus on
+                  running your business.
+                </p>
+
+                {/* Additional Website Work Callout */}
+                <div className="mt-6 p-6 rounded-2xl bg-stone-950/80 border border-primary/30 space-y-2">
+                  <div className="flex items-center justify-between gap-4">
+                    <span className="text-sm font-bold text-foreground">
+                      Additional Website Work
+                    </span>
+                    <div className="text-right shrink-0">
+                      <span className="text-2xl font-extrabold font-outfit text-primary">$45</span>
+                      <span className="text-xs font-semibold text-muted ml-1">per hour</span>
                     </div>
+                  </div>
+                  <p className="text-xs sm:text-sm text-secondary leading-relaxed">
+                    Content updates, design changes, new features, and other work outside routine
+                    maintenance
+                  </p>
+                </div>
+              </div>
+
+              {/* Right: What's Included in Hosting & Maintenance */}
+              <div className="lg:col-span-7 lg:pl-8 lg:border-l border-border/70 flex flex-col justify-between h-full">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground mb-5">
+                    What&apos;s included
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {hostingFeatures.map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-start gap-3 p-3.5 rounded-xl bg-stone-950/50 border border-border/60 text-sm text-secondary font-medium"
+                      >
+                        <CheckCircle2 size={18} className="text-primary shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-foreground font-bold mb-4">How I Work</h3>
-                  <p>
-                    I’m always learning, experimenting with new tools, refining projects, and exploring areas like AI fundamentals, frontend architecture, and performance optimization. I value quality, thoughtful design, and clear communication, and I enjoy working both independently and with remote, cross-functional teams.
+                <div className="mt-8 pt-6 border-t border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <p className="text-xs sm:text-sm text-muted">
+                    Available for any website I build or existing WordPress sites needing a reliable
+                    care plan.
                   </p>
-                </div>
-
-                <div className="pt-4">
-                  <a href="/Alexis Baranauskas Resume.pdf" download className="inline-flex items-center space-x-3 px-10 py-5 bg-foreground text-background rounded-full hover:bg-primary transition-all duration-300 font-bold shadow-xl shadow-stone-900/10 dark:shadow-none">
-                    <Download size={20} />
-                    <span className="text-lg">Download Resume</span>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-stone-900 border border-border hover:border-primary hover:text-primary text-foreground font-bold text-sm transition-all shrink-0"
+                  >
+                    <span>Inquire About Maintenance</span>
+                    <ArrowRight size={16} />
                   </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio / My Work Section */}
+      <section id="projects" className="py-24 lg:py-32 border-t border-border/60 bg-stone-950/40">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
+            <SectionHeader
+              title="My Work"
+              subtitle="Real websites, online stores, and web applications designed and built with care."
+            />
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-hover transition-colors"
+            >
+              <span>Ready to refresh or build your site? Let’s talk</span>
+              <ArrowRight size={16} />
+            </a>
+          </div>
+          <ProjectCarousel projects={projects} />
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section id="process" className="py-24 lg:py-32 border-t border-border/60">
+        <div className="container mx-auto px-6">
+          <div className="max-w-3xl mb-16">
+            <SectionHeader title="How It Works" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {processSteps.map((item) => (
+              <div
+                key={item.step}
+                className="relative rounded-[2rem] bg-card border border-border p-8 flex flex-col justify-between hover:border-primary/40 transition-colors"
+              >
+                <div>
+                  <span className="inline-block text-4xl font-extrabold font-outfit text-primary/30 mb-4">
+                    {item.step}
+                  </span>
+                  <h3 className="text-xl font-bold font-outfit text-foreground mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-secondary text-sm leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Section (Founder & Personal Approach) */}
+      <section id="about" className="py-24 lg:py-32 border-t border-border/60 bg-stone-950/40">
+        <div className="container mx-auto px-6">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeader title="Meet Alexis — Your Designer & Developer" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 mt-14 items-center">
+              <div className="lg:col-span-3 space-y-6 text-lg text-secondary leading-relaxed">
+                <p>
+                  Hi, I&apos;m <span className="text-foreground font-bold">Alexis Baranauskas</span>
+                  , a freelance web designer and full-stack developer based in Litchfield County,
+                  Connecticut.
+                </p>
+
+                <p>
+                  I specialize in building modern, mobile-responsive websites, e-commerce stores,
+                  and custom CMS solutions for small businesses. Whether you&apos;re refreshing an
+                  outdated website or starting from scratch, I take a hands-on approach to every
+                  project, focusing on thoughtful design, reliable performance, and solutions
+                  tailored to your business.
+                </p>
+
+                <p>
+                  My work ranges from building a WordPress-powered e-commerce store with a content
+                  management system for{" "}
+                  <a
+                    href="https://www.sunsetmeadowvineyards.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-semibold"
+                  >
+                    Sunset Meadow Vineyards
+                  </a>{" "}
+                  and creating a fresh website for{" "}
+                  <a
+                    href="https://www.crabbyals.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-semibold"
+                  >
+                    Crabby Al&apos;s Seafood Restaurant
+                  </a>{" "}
+                  to redesigning and developing a community-focused nonprofit website for{" "}
+                  <a
+                    href="https://www.possumqueenfoundation.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-semibold"
+                  >
+                    The Possum Queen Foundation
+                  </a>{" "}
+                  and building custom web applications like{" "}
+                  <a
+                    href="https://volleytrack.net/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-semibold"
+                  >
+                    VolleyTrack
+                  </a>
+                  .
+                </p>
+
+                <p>
+                  What I enjoy most is bringing business ideas to life through thoughtful design and
+                  development. I&apos;m passionate about helping local and small businesses build a
+                  strong online presence with websites that not only look great but work for their
+                  goals. Every project is an opportunity to create something meaningful, and I take
+                  pride in working directly with my clients to bring their vision to life.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {[
+                    "Independently owned — no big-agency overhead",
+                    "Direct 1-on-1 communication with me from start to finish",
+                    "Fast, mobile-responsive & easy-to-manage CMS builds",
+                    "Friendly ongoing support whenever you need updates",
+                  ].map((point) => (
+                    <div
+                      key={point}
+                      className="flex items-center gap-3 p-4 rounded-2xl bg-card border border-border text-sm font-semibold text-foreground"
+                    >
+                      <CheckCircle2 size={18} className="text-primary shrink-0" />
+                      <span>{point}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               <div className="lg:col-span-2">
                 <CardContainer className="w-full">
-                  <CardBody className="p-10 md:p-14 rounded-[3rem] border border-stone-200/60 dark:border-stone-800 bg-gradient-to-br from-white/90 to-stone-100/50 dark:from-stone-900/90 dark:to-black/50 backdrop-blur-3xl shadow-2xl shadow-stone-200/50 dark:shadow-none w-full min-h-[450px] flex flex-col justify-center relative overflow-hidden group/card hover:shadow-primary/10 transition-shadow duration-500">
-                    <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none"></div>
+                  <CardBody className="h-auto w-full p-8 sm:p-10 rounded-[2.5rem] border border-stone-800 bg-gradient-to-br from-stone-900/95 to-black/80 backdrop-blur-3xl shadow-2xl flex flex-col items-center text-center relative overflow-hidden group/card hover:border-primary/30 transition-all duration-500">
+                    <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-primary/10 rounded-full blur-[80px] -mr-24 -mt-24 pointer-events-none" />
+                    <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none" />
 
-                    <CardItem translateZ="50" className="w-full relative z-10">
-                      <div className="flex items-center space-x-4 mb-12">
-                        <div className="p-3.5 bg-primary/10 rounded-2xl text-primary">
-                          <GraduationCap size={28} />
+                    <CardItem translateZ="50" className="w-full relative z-10 flex flex-col items-center">
+                      <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full border-2 border-dashed border-primary/40 p-3 flex items-center justify-center mb-6">
+                        <div className="w-full h-full rounded-full overflow-hidden bg-stone-800 shadow-inner">
+                          <img
+                            src="/profile.png"
+                            alt="Alexis Baranauskas"
+                            className="w-full h-full object-cover scale-105"
+                          />
                         </div>
-                        <h3 className="text-3xl font-bold font-outfit text-foreground tracking-tight">Education</h3>
                       </div>
+
+                      <h3 className="text-2xl sm:text-3xl font-bold font-outfit text-foreground">
+                        Alexis Baranauskas
+                      </h3>
+                      <p className="text-sm font-semibold text-primary mt-1">
+                        Freelance Web Designer &amp; Full-Stack Developer
+                      </p>
+                      <p className="text-xs text-muted mt-0.5 mb-8">
+                        Litchfield County, Connecticut
+                      </p>
                     </CardItem>
 
-                    <div className="space-y-10 relative z-10">
-                      <CardItem translateZ="60" className="w-full">
-                        <div className="relative pl-6 border-l-2 border-primary/20">
-                          <p className="font-bold text-foreground text-2xl mb-1 tracking-tight">BS in Computer Science</p>
-                          <p className="text-secondary font-medium text-lg mb-3">Central Connecticut State University</p>
-                          <div className="flex items-center text-muted font-medium mb-5 text-base">
-                            <Calendar size={16} className="mr-2.5 text-primary/70" />
-                            <span>May 2025</span>
+                    <CardItem translateZ="60" className="w-full relative z-10 text-left">
+                      <div className="p-6 rounded-2xl bg-stone-950/80 border border-border">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                            <GraduationCap size={22} />
                           </div>
-
-                          <div className="inline-flex items-center px-4 py-2 bg-stone-100 dark:bg-stone-800/80 rounded-xl text-xs font-bold text-stone-600 dark:text-stone-300 uppercase tracking-widest border border-stone-200 dark:border-stone-700/50 shadow-sm">
-                            <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2.5"></span>
-                            Minor in Arabic Language
+                          <div>
+                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                              Education
+                            </p>
+                            <p className="font-bold text-foreground text-lg leading-tight">
+                              B.S. in Computer Science
+                            </p>
                           </div>
                         </div>
-                      </CardItem>
-                    </div>
-
-
+                        <p className="text-secondary text-sm font-medium">
+                          Central Connecticut State University &bull; May 2025
+                        </p>
+                        <div className="mt-3 inline-flex items-center px-3 py-1 bg-stone-900 rounded-lg text-[11px] font-bold text-stone-300 uppercase tracking-wider border border-stone-800">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mr-2" />
+                          Minor in Arabic Language
+                        </div>
+                      </div>
+                    </CardItem>
                   </CardBody>
                 </CardContainer>
               </div>
@@ -165,140 +794,242 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Portfolio Section */}
-      <section id="projects" className="py-24 lg:py-32">
+      {/* Contact / Quote Section */}
+      <section id="contact" className="py-24 lg:py-32 border-t border-border/60">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-8">
-            <SectionHeader
-              title="Portfolio"
-              subtitle="Showcasing my technical experience and personal projects."
-            />
-          </div>
-          <ProjectCarousel projects={projects} />
-        </div>
-      </section>
+          <div className="bg-card text-foreground rounded-[3rem] p-8 md:p-16 lg:p-20 shadow-2xl overflow-hidden relative border border-border">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -mr-48 -mt-48 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -ml-32 -mb-32 pointer-events-none" />
 
-
-      {/* Contact Section */}
-      < section id="contact" className="py-24 lg:py-32" >
-        <div className="container mx-auto px-6">
-          <div className="bg-card text-foreground rounded-[3rem] p-8 md:p-20 shadow-3xl overflow-hidden relative border border-border">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -mr-48 -mt-48"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -ml-32 -mb-32"></div>
-
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-              <div className="space-y-12">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+              <div className="lg:col-span-5 space-y-10">
                 <SectionHeader
-                  title="Let's Connect"
-                  subtitle="Open for opportunities, collaborations, or just a technical chat."
+                  title="Get a Free Quote"
+                  subtitle="Reach out directly to me—no sales team, no pressure. Tell me a little about your business and what you need, and I’ll get back to you personally."
                 />
-                <div className="space-y-8 pt-8">
+
+                <div className="space-y-6 pt-2">
                   {[
-                    { icon: Mail, label: "Email", value: "lexi.codes.dev@gmail.com", href: "mailto:lexi.codes.dev@gmail.com?subject=Portfolio Connection" },
-                    { icon: Linkedin, label: "LinkedIn", value: "alexisb-dev", href: "https://www.linkedin.com/in/alexisb-dev/" },
-                    { icon: Github, label: "GitHub", value: "abara02", href: "https://github.com/abara02" }
+                    {
+                      icon: Mail,
+                      label: "Email Me Directly",
+                      value: "lexi.codes.dev@gmail.com",
+                      href: "mailto:lexi.codes.dev@gmail.com?subject=LexiCodes%20Digital%20Website%20Inquiry",
+                    },
+                    {
+                      icon: Linkedin,
+                      label: "LinkedIn",
+                      value: "alexisb-dev",
+                      href: "https://www.linkedin.com/in/alexisb-dev/",
+                    },
+                    {
+                      icon: Github,
+                      label: "GitHub",
+                      value: "abara02",
+                      href: "https://github.com/abara02",
+                    },
                   ].map((item) => (
-                    <a key={item.label} href={item.href} target={item.label !== "Email" ? "_blank" : undefined} rel={item.label !== "Email" ? "noopener noreferrer" : undefined} className="flex items-center group">
-                      <div className="p-5 rounded-2xl bg-stone-50 dark:bg-stone-800 border border-border text-foreground group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                        <item.icon size={26} />
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.label !== "Email Me Directly" ? "_blank" : undefined}
+                      rel={item.label !== "Email Me Directly" ? "noopener noreferrer" : undefined}
+                      className="flex items-center group"
+                    >
+                      <div className="p-4 rounded-2xl bg-stone-900 border border-border text-foreground group-hover:bg-primary group-hover:text-stone-950 transition-all duration-300">
+                        <item.icon size={22} />
                       </div>
-                      <div className="ml-8">
-                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-2">{item.label}</p>
-                        <p className="text-xl font-bold group-hover:text-primary transition-colors">{item.value}</p>
+                      <div className="ml-5">
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.25em] mb-1">
+                          {item.label}
+                        </p>
+                        <p className="text-base sm:text-lg font-bold group-hover:text-primary transition-colors">
+                          {item.value}
+                        </p>
                       </div>
                     </a>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-stone-50 dark:bg-stone-800/50 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
+              <div className="lg:col-span-7 bg-stone-900/60 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
+                    const formElement = e.currentTarget;
                     setIsSubmitting(true);
                     setError(null);
                     setSuccess(false);
 
                     try {
-                      const formData = new FormData(e.currentTarget);
-                      const name = formData.get("name") as string;
-                      const email = formData.get("email") as string;
-                      const message = formData.get("message") as string;
+                      const formData = new FormData(formElement);
+                      const payload = {
+                        name: (formData.get("name") as string) || "",
+                        email: (formData.get("email") as string) || "",
+                        business: (formData.get("business") as string) || "",
+                        serviceType:
+                          (formData.get("serviceType") as string) || "General Inquiry",
+                        message: (formData.get("message") as string) || "",
+                        website_url: (formData.get("website_url") as string) || "",
+                        formStartedAt,
+                      };
 
-                      const result = await sendEmail({ name, email, message });
+                      const response = await fetch("/api/contact", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(payload),
+                      });
 
-                      if (result.success) {
+                      const result = await response.json();
+
+                      if (response.ok && result.success) {
                         setSuccess(true);
-                        (e.target as HTMLFormElement).reset();
+                        formElement.reset();
                       } else {
                         setError(result.error || "Something went wrong.");
                       }
-                    } catch (err: any) {
+                    } catch (err: unknown) {
                       console.error("Form Submission Error:", err);
                       setError("Failed to reach the server. Please try again later.");
                     } finally {
                       setIsSubmitting(false);
                     }
                   }}
-                  className="space-y-8"
+                  className="space-y-6"
                 >
+                  {/* Honeypot field for spam protection (visually hidden) */}
+                  <div className="sr-only" aria-hidden="true">
+                    <label htmlFor="website_url">Website</label>
+                    <input
+                      id="website_url"
+                      name="website_url"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   {success && (
-                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-500 text-sm font-bold animate-in fade-in zoom-in duration-300">
-                      Message sent successfully! I'll get back to you soon.
+                    <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
+                      Thanks for reaching out! Your message came straight to my inbox and I’ll get
+                      back to you soon.
                     </div>
                   )}
                   {error && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-bold animate-in fade-in zoom-in duration-300">
+                    <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
                       {error}
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Name</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2.5">
+                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
+                        Your Name *
+                      </label>
                       <input
                         required
                         name="name"
                         type="text"
+                        maxLength={100}
                         disabled={isSubmitting}
-                        className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground disabled:opacity-60"
-                        placeholder="John Doe"
+                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        placeholder="Jane Smith"
                       />
                     </div>
-                    <div className="space-y-3">
-                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Email</label>
+                    <div className="space-y-2.5">
+                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
+                        Email Address *
+                      </label>
                       <input
                         required
                         name="email"
                         type="email"
+                        maxLength={254}
                         disabled={isSubmitting}
-                        className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg text-foreground disabled:opacity-60"
-                        placeholder="john@example.com"
+                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        placeholder="jane@yourbusiness.com"
                       />
                     </div>
                   </div>
-                  <div className="space-y-3">
-                    <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">Message</label>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2.5">
+                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
+                        Business or Current Website
+                      </label>
+                      <input
+                        name="business"
+                        type="text"
+                        maxLength={150}
+                        disabled={isSubmitting}
+                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        placeholder="e.g. Main Street Bakery"
+                      />
+                    </div>
+                    <div className="space-y-2.5">
+                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
+                        What Do You Need Help With?
+                      </label>
+                      <select
+                        name="serviceType"
+                        disabled={isSubmitting}
+                        className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        defaultValue="Tier 02 — Growth & CMS ($3,500+)"
+                      >
+                        <option value="Tier 01 — Starter ($2,250+)">
+                          Tier 01 — Starter Website ($2,250+)
+                        </option>
+                        <option value="Tier 02 — Growth & CMS ($3,500+)">
+                          Tier 02 — Growth &amp; CMS Website ($3,500+)
+                        </option>
+                        <option value="Tier 03 — E-Commerce ($4,500+)">
+                          Tier 03 — E-Commerce Store ($4,500+)
+                        </option>
+                        <option value="Website Hosting & Maintenance ($150/mo+)">
+                          Website Hosting &amp; Maintenance ($150/mo+)
+                        </option>
+                        <option value="Additional Website Work ($45/hr)">
+                          Additional Website Work ($45/hr)
+                        </option>
+                        <option value="Not Sure Yet / Custom Quote">
+                          Not Sure Yet — Let&apos;s Chat!
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2.5">
+                    <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
+                      Tell Me About Your Project *
+                    </label>
                     <textarea
                       required
                       name="message"
                       rows={4}
+                      minLength={10}
+                      maxLength={5000}
                       disabled={isSubmitting}
-                      className="w-full bg-white dark:bg-stone-900 border border-border rounded-xl px-6 py-4 focus:outline-none focus:border-primary transition-colors font-medium text-lg resize-none text-foreground disabled:opacity-60"
-                      placeholder="How can I help you?"
-                    ></textarea>
+                      className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
+                      placeholder="What does your business do, and what would you love your new or refreshed website to accomplish?"
+                    />
                   </div>
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-6 bg-primary text-white rounded-2xl font-bold text-xl hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed"
+                    className="w-full py-5 bg-primary text-stone-950 rounded-2xl font-bold text-lg hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
-                      <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="w-6 h-6 border-2 border-stone-950/30 border-t-stone-950 rounded-full animate-spin" />
                     ) : (
                       <>
-                        <Send size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        <span>Send Message</span>
+                        <Send
+                          size={18}
+                          className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                        />
+                        <span>Send Message &amp; Request Free Quote</span>
                       </>
                     )}
                   </button>
@@ -309,18 +1040,37 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="py-20 border-t border-stone-100">
+      {/* Footer */}
+      <footer className="py-16 border-t border-border">
         <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-stone-400 font-medium tracking-tight">
-            &copy; 2026 Alexis Baranauskas
-          </p>
-          <div className="flex space-x-12">
+          <div className="flex flex-col items-center md:items-start gap-3">
+            <img
+              src="/logo-dark.png"
+              alt="LexiCodes Digital — Webdesign & Development"
+              className="h-9 w-auto object-contain"
+            />
+            <p className="text-secondary text-xs sm:text-sm font-medium">
+              Independently owned web design &amp; development studio. Modern websites. Personal
+              service.
+            </p>
+            <p className="text-muted text-xs">
+              &copy; {new Date().getFullYear()} LexiCodes Digital — Alexis Baranauskas. All rights
+              reserved.
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-8">
             {[
+              { name: "Services", href: "#services" },
+              { name: "My Work", href: "#projects" },
+              { name: "How It Works", href: "#process" },
               { name: "About Me", href: "#about" },
-              { name: "Portfolio", href: "#projects" },
-              { name: "Connect", href: "#contact" }
-            ].map(l => (
-              <a key={l.name} href={l.href} className="text-xs font-bold uppercase tracking-[0.2em] text-stone-400 hover:text-primary transition-colors">
+              { name: "Get a Quote", href: "#contact" },
+            ].map((l) => (
+              <a
+                key={l.name}
+                href={l.href}
+                className="text-xs font-bold uppercase tracking-[0.2em] text-muted hover:text-primary transition-colors"
+              >
                 {l.name}
               </a>
             ))}

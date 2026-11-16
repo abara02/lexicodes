@@ -45,53 +45,54 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
     };
 
     return (
-        <div className="relative w-full max-w-7xl mx-auto px-4 py-8">
+        <div className="relative w-full max-w-7xl mx-auto px-4 py-4 md:py-8">
             {/* Navigation Arrows */}
-            <div className="absolute top-1/2 -left-4 xl:-left-20 z-20 -translate-y-1/2 hidden md:block">
+            <div className="absolute top-1/2 -left-2 sm:left-0 md:-left-4 xl:-left-20 z-20 -translate-y-1/2 block">
                 <button
                     onClick={prevStep}
-                    className="p-5 bg-card border border-border rounded-full hover:bg-primary hover:text-white dark:hover:text-stone-950 transition-all shadow-2xl group cursor-pointer"
+                    className="p-2.5 md:p-5 bg-card/95 backdrop-blur-md border border-border rounded-full hover:bg-primary active:bg-primary hover:text-white active:text-white dark:hover:text-stone-950 dark:active:text-stone-950 transition-all shadow-xl md:shadow-2xl group cursor-pointer"
                     aria-label="Previous project"
                 >
-                    <ChevronLeft className="w-7 h-7 group-hover:scale-110 transition-transform" />
+                    <ChevronLeft className="w-5 h-5 md:w-7 md:h-7 group-hover:scale-110 transition-transform" />
                 </button>
             </div>
 
-            <div className="absolute top-1/2 -right-4 xl:-right-20 z-20 -translate-y-1/2 hidden md:block">
+            <div className="absolute top-1/2 -right-2 sm:right-0 md:-right-4 xl:-right-20 z-20 -translate-y-1/2 block">
                 <button
                     onClick={nextStep}
-                    className="p-5 bg-card border border-border rounded-full hover:bg-primary hover:text-white dark:hover:text-stone-950 transition-all shadow-2xl group cursor-pointer"
+                    className="p-2.5 md:p-5 bg-card/95 backdrop-blur-md border border-border rounded-full hover:bg-primary active:bg-primary hover:text-white active:text-white dark:hover:text-stone-950 dark:active:text-stone-950 transition-all shadow-xl md:shadow-2xl group cursor-pointer"
                     aria-label="Next project"
                 >
-                    <ChevronRight className="w-7 h-7 group-hover:scale-110 transition-transform" />
+                    <ChevronRight className="w-5 h-5 md:w-7 md:h-7 group-hover:scale-110 transition-transform" />
                 </button>
             </div>
 
             {/* Carousel Container */}
-            <div className="relative h-[560px] flex items-center justify-center overflow-hidden md:overflow-visible">
+            <div className="relative h-[490px] md:h-[560px] flex items-center justify-center">
                 <AnimatePresence initial={false} custom={direction} mode="popLayout">
                     {[-1, 0, 1].map((offset) => {
                         const project = getProject(index + offset);
                         const isActive = offset === 0;
+                        const isMobile = windowWidth < 768;
 
                         return (
                             <motion.div
                                 key={`${index + offset}-${project.id}`}
                                 custom={direction}
                                 initial={{
-                                    x: offset * 400 + (direction * 200),
+                                    x: offset * (isMobile ? 280 : 400) + (direction * (isMobile ? 140 : 200)),
                                     scale: isActive ? 1 : 0.8,
-                                    opacity: isActive ? 1 : 0.4,
+                                    opacity: isActive ? 1 : (isMobile ? 0 : 0.4),
                                     zIndex: isActive ? 10 : 1
                                 }}
                                 animate={{
-                                    x: offset * (windowWidth < 768 ? 340 : 480),
+                                    x: offset * (isMobile ? 300 : 480),
                                     scale: isActive ? 1 : 0.85,
-                                    opacity: isActive ? 1 : 0.45,
+                                    opacity: isActive ? 1 : (isMobile ? 0 : 0.45),
                                     zIndex: isActive ? 10 : 1
                                 }}
                                 exit={{
-                                    x: offset * 400 - (direction * 200),
+                                    x: offset * (isMobile ? 280 : 400) - (direction * (isMobile ? 140 : 200)),
                                     opacity: 0,
                                     scale: 0.7
                                 }}
@@ -104,12 +105,12 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 drag={isActive ? "x" : false}
                                 dragConstraints={{ left: 0, right: 0 }}
                                 onDragEnd={handleDragEnd}
-                                className={`absolute w-[88vw] max-w-[360px] md:max-w-none md:w-[620px] bg-card rounded-[2.5rem] border overflow-hidden shadow-2xl transition-colors duration-500 ${
-                                    isActive ? "border-primary/40 shadow-primary/10" : "border-border/50"
-                                } flex flex-col h-[510px] cursor-grab active:cursor-grabbing`}
+                                className={`absolute w-[76vw] max-w-[300px] sm:max-w-[330px] md:max-w-none md:w-[620px] bg-card rounded-[2rem] md:rounded-[2.5rem] border overflow-hidden shadow-2xl transition-colors duration-500 ${
+                                    isActive ? "border-primary/40 shadow-primary/10" : "border-border/50 pointer-events-none md:pointer-events-auto"
+                                } flex flex-col h-[450px] md:h-[510px] cursor-grab active:cursor-grabbing`}
                             >
                                 {/* Image Section */}
-                                <div className="h-64 relative bg-stone-100 dark:bg-stone-900 overflow-hidden group/img">
+                                <div className="h-44 md:h-64 relative bg-stone-100 dark:bg-stone-900 overflow-hidden group/img">
                                     {project.image ? (
                                         <img
                                             src={project.image}
@@ -179,14 +180,14 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 </div>
 
                                 {/* Content Section */}
-                                <div className="p-8 md:p-10 flex-1 flex flex-col justify-center">
+                                <div className="p-6 md:p-10 flex-1 flex flex-col justify-center">
                                     <div>
-                                        <h3 className={`text-2xl md:text-3xl font-bold font-outfit transition-colors duration-300 ${
+                                        <h3 className={`text-xl md:text-3xl font-bold font-outfit transition-colors duration-300 ${
                                             isActive ? "text-primary" : "text-primary/60"
                                         }`}>
                                             {project.title}
                                         </h3>
-                                        <p className={`mt-3 text-base leading-relaxed transition-opacity duration-300 ${
+                                        <p className={`mt-2.5 md:mt-3 text-xs sm:text-sm md:text-base leading-relaxed transition-opacity duration-300 ${
                                             isActive ? "text-secondary" : "text-muted"
                                         }`}>
                                             {project.description}

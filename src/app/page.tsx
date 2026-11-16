@@ -386,7 +386,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             {independentPromises.map((promise, idx) => (
               <motion.div
                 key={promise.title}
@@ -395,15 +395,17 @@ export default function Home() {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: idx * 0.12, ease: "easeOut" }}
                 whileHover={{ y: -6 }}
-                className="rounded-[2rem] bg-card border border-border p-8 hover:border-primary/40 transition-colors shadow-xl"
+                className="rounded-2xl md:rounded-[2rem] bg-card border border-border p-5 md:p-8 hover:border-primary/40 transition-colors shadow-xl"
               >
-                <div className="w-12 h-12 rounded-2xl bg-primary/15 text-primary flex items-center justify-center mb-6">
-                  <promise.icon size={24} />
+                <div className="flex items-center gap-3.5 md:block mb-2.5 md:mb-0">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-primary/15 text-primary flex items-center justify-center shrink-0 md:mb-6">
+                    <promise.icon size={20} className="md:w-6 md:h-6" />
+                  </div>
+                  <h3 className="text-base md:text-xl font-bold font-outfit text-foreground md:mb-3 leading-snug">
+                    {promise.title}
+                  </h3>
                 </div>
-                <h3 className="text-xl font-bold font-outfit text-foreground mb-3">
-                  {promise.title}
-                </h3>
-                <p className="text-secondary text-sm sm:text-base leading-relaxed">
+                <p className="text-secondary text-xs sm:text-sm md:text-base leading-relaxed">
                   {promise.description}
                 </p>
               </motion.div>
@@ -922,19 +924,20 @@ export default function Home() {
 
       {/* Contact / Quote Section */}
       <section id="contact" className="py-24 lg:py-32 border-t border-border/60">
-        <div className="container mx-auto px-6">
-          <div className="bg-card text-foreground rounded-[3rem] p-8 md:p-16 lg:p-20 shadow-2xl overflow-hidden relative border border-border">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="bg-card text-foreground rounded-[2rem] md:rounded-[3rem] p-5 sm:p-8 md:p-16 lg:p-20 shadow-2xl overflow-hidden relative border border-border">
             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-[120px] -mr-48 -mt-48 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -ml-32 -mb-32 pointer-events-none" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-              <div className="lg:col-span-5 space-y-10">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+              <div className="lg:col-span-5 space-y-6 lg:space-y-10">
                 <SectionHeader
                   title="Get a Free Quote"
                   subtitle="Reach out directly to me—no sales team, no pressure. Tell me a little about your business and what you need, and I’ll get back to you personally."
                 />
 
-                <div className="space-y-6 pt-2">
+                {/* Desktop Only: Email & LinkedIn in left column */}
+                <div className="hidden lg:block space-y-6 pt-2">
                   {[
                     {
                       icon: Mail,
@@ -972,7 +975,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="lg:col-span-7 bg-stone-100/70 dark:bg-stone-900/60 p-8 md:p-12 rounded-[2rem] border border-border backdrop-blur-sm">
+              <div className="lg:col-span-7 bg-transparent md:bg-stone-100/70 md:dark:bg-stone-900/60 p-0 md:p-12 rounded-none md:rounded-[2rem] border-0 md:border md:border-border backdrop-blur-sm">
                 <form
                   onSubmit={async (e) => {
                     e.preventDefault();
@@ -1025,7 +1028,7 @@ export default function Home() {
                       setIsSubmitting(false);
                     }
                   }}
-                  className="space-y-6"
+                  className="space-y-5 md:space-y-6"
                 >
                   {/* Honeypot field for spam protection (visually hidden, non-autofillable) */}
                   <div className="sr-only" aria-hidden="true">
@@ -1050,8 +1053,8 @@ export default function Home() {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                    <div className="space-y-2">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
                         Your Name *
                       </label>
@@ -1061,11 +1064,11 @@ export default function Home() {
                         type="text"
                         maxLength={100}
                         disabled={isSubmitting}
-                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         placeholder="Enter Your Name"
                       />
                     </div>
-                    <div className="space-y-2.5">
+                    <div className="space-y-2">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
                         Email Address *
                       </label>
@@ -1075,14 +1078,14 @@ export default function Home() {
                         type="email"
                         maxLength={254}
                         disabled={isSubmitting}
-                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         placeholder="jane@yourbusiness.com"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2.5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+                    <div className="space-y-2">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
                         Business or Current Website
                       </label>
@@ -1091,18 +1094,18 @@ export default function Home() {
                         type="text"
                         maxLength={150}
                         disabled={isSubmitting}
-                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         placeholder="e.g. Main Street Bakery"
                       />
                     </div>
-                    <div className="space-y-2.5">
+                    <div className="space-y-2">
                       <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
                         What Do You Need Help With?
                       </label>
                       <select
                         name="serviceType"
                         disabled={isSubmitting}
-                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
                         defaultValue="Website Design & Development"
                       >
                         <option value="Website Design & Development">
@@ -1118,7 +1121,7 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="space-y-2.5">
+                  <div className="space-y-2">
                     <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
                       Tell Me About Your Project *
                     </label>
@@ -1129,7 +1132,7 @@ export default function Home() {
                       minLength={5}
                       maxLength={5000}
                       disabled={isSubmitting}
-                      className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
+                      className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
                       placeholder="What does your business do, and what would you love your new or refreshed website to accomplish?"
                     />
                   </div>
@@ -1137,21 +1140,58 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-5 bg-primary text-white dark:text-stone-950 rounded-2xl font-bold text-lg hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center space-x-3 group disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                    className="w-full py-4 md:py-5 px-3 md:px-4 bg-primary text-white dark:text-stone-950 rounded-2xl font-bold text-[13px] sm:text-base md:text-lg hover:bg-primary-hover transition-all duration-300 shadow-2xl shadow-primary/20 flex items-center justify-center gap-2 md:gap-3 text-center group disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                   >
                     {isSubmitting ? (
                       <div className="w-6 h-6 border-2 border-white/30 border-t-white dark:border-stone-950/30 dark:border-t-stone-950 rounded-full animate-spin" />
                     ) : (
                       <>
                         <Send
-                          size={18}
-                          className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
+                          className="w-4 h-4 md:w-[18px] md:h-[18px] shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
                         />
                         <span>Send Message &amp; Request Free Quote</span>
                       </>
                     )}
                   </button>
                 </form>
+
+                {/* Mobile Only: Email & LinkedIn placed below the form */}
+                <div className="lg:hidden mt-8 pt-6 border-t border-border/70 space-y-5">
+                  {[
+                    {
+                      icon: Mail,
+                      label: "Email Me Directly",
+                      value: "lexi.codes.dev@gmail.com",
+                      href: "mailto:lexi.codes.dev@gmail.com",
+                    },
+                    {
+                      icon: Linkedin,
+                      label: "LinkedIn",
+                      value: "alexisb-dev",
+                      href: "https://www.linkedin.com/in/alexisb-dev/",
+                    },
+                  ].map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target={item.label !== "Email Me Directly" ? "_blank" : undefined}
+                      rel={item.label !== "Email Me Directly" ? "noopener noreferrer" : undefined}
+                      className="flex items-center group"
+                    >
+                      <div className="p-3.5 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-border text-foreground group-hover:bg-primary group-hover:text-white dark:group-hover:text-stone-950 transition-all duration-300 shrink-0">
+                        <item.icon size={20} />
+                      </div>
+                      <div className="ml-4 min-w-0">
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.22em] mb-0.5">
+                          {item.label}
+                        </p>
+                        <p className="text-sm sm:text-base font-bold group-hover:text-primary transition-colors truncate">
+                          {item.value}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -1176,12 +1216,12 @@ export default function Home() {
               decoding="async"
               className="block dark:hidden h-9 w-auto object-contain"
             />
-            <p className="text-muted text-xs">
+            <p className="text-muted text-xs text-center md:text-left">
               &copy; {new Date().getFullYear()} LexiCodes Digital — Alexis Baranauskas. All rights
               reserved.
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="hidden md:flex flex-wrap justify-center gap-8">
             {[
               { name: "Services", href: "#services" },
               { name: "Portfolio", href: "#projects" },

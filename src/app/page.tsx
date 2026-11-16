@@ -57,7 +57,7 @@ const serviceTiers = [
     tier: "TIER 01",
     name: "Starter",
     icon: Layout,
-    price: "$2,250",
+    price: "$1,950",
     billing: "starting at / one-time",
     popular: false,
     description:
@@ -68,7 +68,7 @@ const serviceTiers = [
       "Basic on-page SEO setup",
       "Social media links and integration",
       "Basic website performance optimization",
-      "2 rounds of design revisions",
+      "1 round of design revisions",
       "Website testing and launch assistance",
     ],
     bonusTitle: null,
@@ -78,7 +78,7 @@ const serviceTiers = [
     tier: "TIER 02",
     name: "Growth & CMS",
     icon: Layers,
-    price: "$3,500",
+    price: "$3,250",
     billing: "starting at / one-time",
     popular: true,
     description:
@@ -89,7 +89,7 @@ const serviceTiers = [
       "CMS integration for easy content updates",
       "Enhanced on-page SEO setup",
       "Custom forms and integrations",
-      "3 rounds of design revisions",
+      "2 rounds of design revisions",
       "Up to 1 hour of personalized CMS training",
     ],
     bonusTitle: "1 Month of Support & Maintenance Included",
@@ -100,7 +100,7 @@ const serviceTiers = [
     tier: "TIER 03",
     name: "E-Commerce",
     icon: ShoppingBag,
-    price: "$4,500",
+    price: "$4,750",
     billing: "starting at / one-time",
     popular: false,
     description:
@@ -259,7 +259,8 @@ export default function Home() {
                 <div className="relative z-10 rounded-2xl bg-stone-950/90 border border-border p-6 mb-5 flex flex-col items-center justify-center text-center">
                   <img
                     src="/logo-dark.png"
-                    alt="LexiCodes Digital — Webdesign & Development"
+                    alt="LexiCodes Digital — Custom Web Design & Development in Connecticut"
+                    decoding="async"
                     className="w-full max-w-[330px] h-auto object-contain"
                   />
                   <p className="mt-4 text-xs sm:text-sm font-bold text-primary tracking-wide">
@@ -298,7 +299,8 @@ export default function Home() {
                       <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-900">
                         <img
                           src="/projects/sunset-meadow.png"
-                          alt="Sunset Meadow Vineyards"
+                          alt="Sunset Meadow Vineyards mobile-friendly winery e-commerce website in Goshen, CT"
+                          decoding="async"
                           className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
@@ -317,24 +319,25 @@ export default function Home() {
                     </a>
 
                     <a
-                      href="https://www.crabbyals.com/"
+                      href="https://www.possumqueenfoundation.org/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group rounded-2xl bg-stone-950/70 border border-border hover:border-primary/50 p-3.5 transition-all"
                     >
                       <div className="h-24 rounded-xl overflow-hidden mb-3 bg-stone-900">
                         <img
-                          src="/projects/crabby-als.jpg"
-                          alt="Crabby Al's Seafood"
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          src="/projects/possum-queen.jpg"
+                          alt="The Possum Queen Foundation mobile-friendly nonprofit website in Litchfield, CT"
+                          decoding="async"
+                          className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <div>
                           <p className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">
-                            Crabby Al’s Seafood
+                            Possum Queen Foundation
                           </p>
-                          <p className="text-[11px] text-muted">Restaurant Web Design</p>
+                          <p className="text-[11px] text-muted">Wix &amp; CMS</p>
                         </div>
                         <ExternalLink
                           size={14}
@@ -407,8 +410,14 @@ export default function Home() {
       <section id="services" className="py-24 lg:py-32 border-t border-border/60">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <SectionHeader title="Services" />
-            <p className="text-lg sm:text-xl text-secondary leading-relaxed mt-4">
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="h-1.5 w-16 bg-primary rounded-full opacity-60" />
+              <h2 className="text-4xl md:text-6xl font-black font-outfit tracking-tight text-foreground">
+                Services
+              </h2>
+              <div className="h-1.5 w-16 bg-primary rounded-full opacity-60" />
+            </div>
+            <p className="text-lg sm:text-xl text-secondary leading-relaxed">
               Every business is unique, and your website should reflect that. At{" "}
               <strong className="text-foreground">LexiCodes Digital</strong>, I offer personalized
               web design and development solutions tailored to your goals, helping your business
@@ -459,7 +468,7 @@ export default function Home() {
                       <span className="text-sm font-semibold text-muted">{tier.billing}</span>
                     </div>
 
-                    <p className="text-secondary text-base leading-relaxed mt-4 mb-8">
+                    <p className="text-secondary text-base leading-relaxed mt-4 mb-8 lg:min-h-[4.5rem]">
                       {tier.description}
                     </p>
 
@@ -467,7 +476,7 @@ export default function Home() {
                       <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground mb-5">
                         What&apos;s included
                       </p>
-                      <ul className="space-y-3.5">
+                      <ul className={`space-y-3.5 ${!isExpanded ? "lg:min-h-[6.75rem]" : ""}`}>
                         {initialFeatures.map((item) => (
                           <li
                             key={item}
@@ -556,9 +565,9 @@ export default function Home() {
 
                 <div className="flex items-baseline gap-2.5">
                   <span className="text-4xl sm:text-5xl font-extrabold font-outfit text-foreground tracking-tight">
-                    $150
+                    $125
                   </span>
-                  <span className="text-sm font-semibold text-muted">/ month, starting at</span>
+                  <span className="text-sm font-semibold text-muted">/ month</span>
                 </div>
 
                 <p className="text-secondary text-base leading-relaxed">
@@ -574,8 +583,9 @@ export default function Home() {
                       Additional Website Work
                     </span>
                     <div className="text-right shrink-0">
-                      <span className="text-2xl font-extrabold font-outfit text-primary">$45</span>
-                      <span className="text-xs font-semibold text-muted ml-1">per hour</span>
+                      <span className="text-sm font-extrabold font-outfit text-primary uppercase tracking-wider">
+                        Billed Hourly
+                      </span>
                     </div>
                   </div>
                   <p className="text-xs sm:text-sm text-secondary leading-relaxed">
@@ -628,8 +638,8 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
             <SectionHeader
-              title="My Work"
-              subtitle="Real websites, online stores, and web applications designed and built with care."
+              title="Portfolio"
+              subtitle="Samples of recent websites I've built"
             />
             <a
               href="#contact"
@@ -771,55 +781,63 @@ export default function Home() {
               </div>
 
               <div className="lg:col-span-2">
-                <CardContainer className="w-full">
-                  <CardBody className="h-auto w-full p-8 sm:p-10 rounded-[2.5rem] border border-stone-800 bg-gradient-to-br from-stone-900/95 to-black/80 backdrop-blur-3xl shadow-2xl flex flex-col items-center text-center relative overflow-hidden group/card hover:border-primary/30 transition-all duration-500">
-                    <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-primary/10 rounded-full blur-[80px] -mr-24 -mt-24 pointer-events-none" />
-                    <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none" />
+                <a
+                  href="mailto:lexi.codes.dev@gmail.com"
+                  className="block w-full cursor-pointer focus:outline-none"
+                  aria-label="Email Alexis Baranauskas at lexi.codes.dev@gmail.com"
+                >
+                  <CardContainer className="w-full">
+                    <CardBody className="h-auto w-full p-8 sm:p-10 rounded-[2.5rem] border border-stone-800 bg-gradient-to-br from-stone-900/95 to-black/80 backdrop-blur-3xl shadow-2xl flex flex-col items-center text-center relative overflow-hidden group/card hover:border-primary/40 transition-all duration-500">
+                      <div className="absolute top-0 right-0 w-[260px] h-[260px] bg-primary/10 rounded-full blur-[80px] -mr-24 -mt-24 pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-primary/5 rounded-full blur-[60px] -ml-20 -mb-20 pointer-events-none" />
 
-                    <CardItem translateZ="50" className="w-full relative z-10 flex flex-col items-center">
-                      <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full border-2 border-dashed border-primary/40 p-3 flex items-center justify-center mb-6">
-                        <div className="w-full h-full rounded-full overflow-hidden bg-stone-800 shadow-inner">
-                          <img
-                            src="/profile.png"
-                            alt="Alexis Baranauskas"
-                            className="w-full h-full object-cover scale-105"
-                          />
-                        </div>
-                      </div>
-
-                      <h3 className="text-2xl sm:text-3xl font-bold font-outfit text-foreground">
-                        Alexis Baranauskas
-                      </h3>
-                      <p className="text-sm font-semibold text-primary mt-1">
-                        Freelance Web Designer &amp; Full-Stack Developer
-                      </p>
-                      <p className="text-xs text-muted mt-0.5 mb-8">
-                        Litchfield County, Connecticut
-                      </p>
-                    </CardItem>
-
-                    <CardItem translateZ="60" className="w-full relative z-10 text-left">
-                      <div className="p-6 rounded-2xl bg-stone-950/80 border border-border">
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
-                            <GraduationCap size={22} />
-                          </div>
-                          <div>
-                            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
-                              Education
-                            </p>
-                            <p className="font-bold text-foreground text-lg leading-tight">
-                              B.S. in Computer Science
-                            </p>
+                      <CardItem translateZ="50" className="w-full relative z-10 flex flex-col items-center">
+                        <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full border-2 border-dashed border-primary/40 p-3 flex items-center justify-center mb-6">
+                          <div className="w-full h-full rounded-full overflow-hidden bg-stone-800 shadow-inner">
+                            <img
+                              src="/profile.png"
+                              alt="Alexis Baranauskas — Freelance Web Designer and Developer in Litchfield County, Connecticut"
+                              loading="lazy"
+                              decoding="async"
+                              className="w-full h-full object-cover scale-105"
+                            />
                           </div>
                         </div>
-                        <p className="text-secondary text-sm font-medium">
-                          Central Connecticut State University &bull; May 2025
+
+                        <h3 className="text-2xl sm:text-3xl font-bold font-outfit text-foreground group-hover/card:text-primary transition-colors">
+                          Alexis Baranauskas
+                        </h3>
+                        <p className="text-sm font-semibold text-primary mt-1">
+                          Freelance Web Designer &amp; Full-Stack Developer
                         </p>
-                      </div>
-                    </CardItem>
-                  </CardBody>
-                </CardContainer>
+                        <p className="text-xs text-muted mt-0.5 mb-8">
+                          Litchfield County, Connecticut
+                        </p>
+                      </CardItem>
+
+                      <CardItem translateZ="60" className="w-full relative z-10 text-left">
+                        <div className="p-6 rounded-2xl bg-stone-950/80 border border-border">
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                              <GraduationCap size={22} />
+                            </div>
+                            <div>
+                              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                                Education
+                              </p>
+                              <p className="font-bold text-foreground text-lg leading-tight">
+                                B.S. in Computer Science
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-secondary text-sm font-medium">
+                            Central Connecticut State University &bull; May 2025
+                          </p>
+                        </div>
+                      </CardItem>
+                    </CardBody>
+                  </CardContainer>
+                </a>
               </div>
             </div>
           </div>
@@ -846,7 +864,7 @@ export default function Home() {
                       icon: Mail,
                       label: "Email Me Directly",
                       value: "lexi.codes.dev@gmail.com",
-                      href: "mailto:lexi.codes.dev@gmail.com?subject=LexiCodes%20Digital%20Website%20Inquiry",
+                      href: "mailto:lexi.codes.dev@gmail.com",
                     },
                     {
                       icon: Linkedin,
@@ -968,7 +986,7 @@ export default function Home() {
                         maxLength={100}
                         disabled={isSubmitting}
                         className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
-                        placeholder="Jane Smith"
+                        placeholder="Enter Your Name"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -1009,25 +1027,16 @@ export default function Home() {
                         name="serviceType"
                         disabled={isSubmitting}
                         className="w-full bg-stone-950 border border-border rounded-xl px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
-                        defaultValue="Tier 02 — Growth & CMS ($3,500+)"
+                        defaultValue="Website Design & Development"
                       >
-                        <option value="Tier 01 — Starter ($2,250+)">
-                          Tier 01 — Starter Website ($2,250+)
+                        <option value="Website Design & Development">
+                          Website Design &amp; Development
                         </option>
-                        <option value="Tier 02 — Growth & CMS ($3,500+)">
-                          Tier 02 — Growth &amp; CMS Website ($3,500+)
+                        <option value="Website Hosting & Maintenance">
+                          Website Hosting &amp; Maintenance
                         </option>
-                        <option value="Tier 03 — E-Commerce ($4,500+)">
-                          Tier 03 — E-Commerce Store ($4,500+)
-                        </option>
-                        <option value="Website Hosting & Maintenance ($150/mo+)">
-                          Website Hosting &amp; Maintenance ($150/mo+)
-                        </option>
-                        <option value="Additional Website Work ($45/hr)">
-                          Additional Website Work ($45/hr)
-                        </option>
-                        <option value="Not Sure Yet / Custom Quote">
-                          Not Sure Yet — Let&apos;s Chat!
+                        <option value="Not Sure Yet — Let's Talk!">
+                          Not Sure Yet — Let&apos;s Talk!
                         </option>
                       </select>
                     </div>
@@ -1079,7 +1088,9 @@ export default function Home() {
           <div className="flex flex-col items-center md:items-start gap-3">
             <img
               src="/logo-dark.png"
-              alt="LexiCodes Digital — Webdesign & Development"
+              alt="LexiCodes Digital — Connecticut Web Design & Development"
+              loading="lazy"
+              decoding="async"
               className="h-9 w-auto object-contain"
             />
             <p className="text-muted text-xs">
@@ -1090,7 +1101,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center gap-8">
             {[
               { name: "Services", href: "#services" },
-              { name: "My Work", href: "#projects" },
+              { name: "Portfolio", href: "#projects" },
               { name: "How It Works", href: "#process" },
               { name: "About Me", href: "#about" },
               { name: "Get a Quote", href: "#contact" },

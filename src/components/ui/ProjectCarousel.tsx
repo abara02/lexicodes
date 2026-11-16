@@ -68,7 +68,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
             </div>
 
             {/* Carousel Container */}
-            <div className="relative h-[640px] flex items-center justify-center">
+            <div className="relative h-[560px] flex items-center justify-center">
                 <AnimatePresence initial={false} custom={direction} mode="popLayout">
                     {[-1, 0, 1].map((offset) => {
                         const project = getProject(index + offset);
@@ -106,14 +106,16 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 onDragEnd={handleDragEnd}
                                 className={`absolute w-[88vw] max-w-[360px] md:max-w-none md:w-[620px] bg-card rounded-[2.5rem] border overflow-hidden shadow-2xl transition-colors duration-500 ${
                                     isActive ? "border-primary/40 shadow-primary/10" : "border-border/50"
-                                } flex flex-col h-[590px] cursor-grab active:cursor-grabbing`}
+                                } flex flex-col h-[510px] cursor-grab active:cursor-grabbing`}
                             >
                                 {/* Image Section */}
                                 <div className="h-64 relative bg-stone-900 overflow-hidden group/img">
                                     {project.image ? (
                                         <img
                                             src={project.image}
-                                            alt={project.title}
+                                            alt={project.imageAlt || project.title}
+                                            loading="lazy"
+                                            decoding="async"
                                             className="w-full h-full object-cover transition-transform duration-700 pointer-events-none"
                                             style={{
                                                 objectPosition: project.objectPosition || "center",
@@ -177,15 +179,10 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                 </div>
 
                                 {/* Content Section */}
-                                <div className="p-8 md:p-10 flex-1 flex flex-col justify-between">
+                                <div className="p-8 md:p-10 flex-1 flex flex-col justify-center">
                                     <div>
-                                        {project.category && (
-                                            <span className="inline-block text-[11px] font-bold uppercase tracking-[0.2em] text-primary mb-2">
-                                                {project.category}
-                                            </span>
-                                        )}
                                         <h3 className={`text-2xl md:text-3xl font-bold font-outfit transition-colors duration-300 ${
-                                            isActive ? "text-foreground" : "text-muted"
+                                            isActive ? "text-primary" : "text-primary/60"
                                         }`}>
                                             {project.title}
                                         </h3>
@@ -194,19 +191,6 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
                                         }`}>
                                             {project.description}
                                         </p>
-                                    </div>
-
-                                    <div className="mt-6 pt-5 border-t border-border/60">
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.tech.map((t) => (
-                                                <span
-                                                    key={t}
-                                                    className="px-3 py-1.5 bg-stone-800/60 text-stone-300 text-[10px] font-bold rounded-full uppercase tracking-widest border border-border/50"
-                                                >
-                                                    {t}
-                                                </span>
-                                            ))}
-                                        </div>
                                     </div>
                                 </div>
                             </motion.div>

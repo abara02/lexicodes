@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
   { name: "Services", href: "#services" },
-  { name: "My Work", href: "#projects" },
+  { name: "Portfolio", href: "#projects" },
   { name: "How It Works", href: "#process" },
   { name: "About Me", href: "#about" },
   { name: "Contact", href: "#contact" },
@@ -40,7 +40,8 @@ export default function Navigation() {
         >
           <img
             src="/logo-dark.png"
-            alt="LexiCodes Digital — Webdesign & Development"
+            alt="LexiCodes Digital — Connecticut Web Design & Development"
+            decoding="async"
             className="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </a>

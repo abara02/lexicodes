@@ -68,7 +68,7 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
             </div>
 
             {/* Carousel Container */}
-            <div className="relative h-[560px] flex items-center justify-center">
+            <div className="relative h-[560px] flex items-center justify-center overflow-hidden md:overflow-visible">
                 <AnimatePresence initial={false} custom={direction} mode="popLayout">
                     {[-1, 0, 1].map((offset) => {
                         const project = getProject(index + offset);

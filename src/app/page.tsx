@@ -173,7 +173,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full overflow-x-hidden">
       {/* Hero Section */}
       <section
         id="home"
@@ -250,7 +250,7 @@ export default function Home() {
             </div>
 
             {/* Right Column: Studio Brand Card & Live Small-Business Work */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-200">
+            <div className="hidden lg:flex lg:col-span-5 justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-200">
               <div className="w-full max-w-lg rounded-[2.5rem] bg-card/90 backdrop-blur-2xl border border-primary/25 p-7 sm:p-9 shadow-2xl shadow-primary/10 relative overflow-hidden">
                 <div className="absolute -top-20 -right-20 w-56 h-56 bg-primary/15 rounded-full blur-3xl pointer-events-none" />
                 <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
@@ -479,10 +479,18 @@ export default function Home() {
                     </p>
 
                     <div className="pt-6 border-t border-border/70">
-                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground mb-5">
+                      <p
+                        className={`${
+                          isExpanded ? "block" : "hidden lg:block"
+                        } text-xs font-bold uppercase tracking-[0.2em] text-foreground mb-5`}
+                      >
                         What&apos;s included
                       </p>
-                      <ul className={`space-y-3.5 ${!isExpanded ? "lg:min-h-[6.75rem]" : ""}`}>
+                      <ul
+                        className={`space-y-3.5 ${
+                          !isExpanded ? "hidden lg:block lg:min-h-[6.75rem]" : "block"
+                        }`}
+                      >
                         {initialFeatures.map((item) => (
                           <li
                             key={item}
@@ -521,9 +529,14 @@ export default function Home() {
                         <button
                           type="button"
                           onClick={() => toggleTier(tier.tier)}
-                          className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-100 dark:bg-stone-950/70 border border-border hover:border-primary/50 text-xs sm:text-sm font-bold text-primary transition-all group cursor-pointer"
+                          className={`${
+                            isExpanded ? "mt-5" : "mt-0 lg:mt-5"
+                          } w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-100 dark:bg-stone-950/70 border border-border hover:border-primary/50 text-xs sm:text-sm font-bold text-primary transition-all group cursor-pointer`}
                         >
-                          <span>
+                          <span className="lg:hidden">
+                            {isExpanded ? "Hide what's included" : "See what's included"}
+                          </span>
+                          <span className="hidden lg:inline">
                             {isExpanded ? "Show fewer features" : "See all included features"}
                           </span>
                           <ChevronDown
@@ -542,8 +555,8 @@ export default function Home() {
                       href="#contact"
                       className={`w-full inline-flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl font-bold text-base transition-all duration-300 ${
                         tier.popular
-                          ? "bg-primary text-white dark:text-stone-950 hover:bg-primary-hover shadow-xl shadow-primary/20"
-                          : "bg-stone-100 dark:bg-stone-900 text-foreground border border-border hover:border-primary hover:text-primary"
+                          ? "bg-primary text-white dark:text-stone-950 hover:bg-violet-700 dark:hover:bg-violet-600 hover:text-white dark:hover:text-white active:bg-violet-700 shadow-xl shadow-primary/20"
+                          : "bg-stone-100 dark:bg-stone-900 text-foreground border border-border hover:bg-primary active:bg-primary hover:border-primary hover:text-white dark:hover:text-stone-950 active:text-white dark:active:text-stone-950 hover:shadow-lg hover:shadow-primary/20"
                       }`}
                     >
                       <span>Get Started with {tier.tier}</span>
@@ -582,8 +595,8 @@ export default function Home() {
                   running your business.
                 </p>
 
-                {/* Additional Website Work Callout */}
-                <div className="mt-6 p-6 rounded-2xl bg-stone-100/80 dark:bg-stone-950/80 border border-primary/30 space-y-2">
+                {/* Additional Website Work Callout (Desktop Only — on mobile it lives inside the dropdown below) */}
+                <div className="hidden lg:block mt-6 p-6 rounded-2xl bg-stone-100/80 dark:bg-stone-950/80 border border-primary/30 space-y-2">
                   <div className="flex items-center justify-between gap-4">
                     <span className="text-sm font-bold text-foreground">
                       Additional Website Work
@@ -599,11 +612,68 @@ export default function Home() {
                     maintenance
                   </p>
                 </div>
+
+                {/* Mobile-Only Dropdown for What's Included + Additional Website Work */}
+                <div className="lg:hidden pt-4 border-t border-border/70">
+                  {expandedTiers["HOSTING"] && (
+                    <div className="space-y-4 mb-5 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground">
+                        What&apos;s included
+                      </p>
+                      <div className="grid grid-cols-1 gap-3">
+                        {hostingFeatures.map((item) => (
+                          <div
+                            key={item}
+                            className="flex items-start gap-3 p-3.5 rounded-xl bg-stone-100/60 dark:bg-stone-950/50 border border-border/60 text-sm text-secondary font-medium"
+                          >
+                            <CheckCircle2 size={18} className="text-primary shrink-0 mt-0.5" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="p-5 rounded-2xl bg-stone-100/80 dark:bg-stone-950/80 border border-primary/30 space-y-2">
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="text-sm font-bold text-foreground">
+                            Additional Website Work
+                          </span>
+                          <div className="text-right shrink-0">
+                            <span className="text-sm font-extrabold font-outfit text-primary uppercase tracking-wider">
+                              Billed Hourly
+                            </span>
+                          </div>
+                        </div>
+                        <p className="text-xs text-secondary leading-relaxed">
+                          Content updates, design changes, new features, and other work outside
+                          routine maintenance
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => toggleTier("HOSTING")}
+                    className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-stone-100 dark:bg-stone-950/70 border border-border hover:border-primary/50 text-xs sm:text-sm font-bold text-primary transition-all group cursor-pointer"
+                  >
+                    <span>
+                      {expandedTiers["HOSTING"]
+                        ? "Hide what's included"
+                        : "See what's included"}
+                    </span>
+                    <ChevronDown
+                      size={18}
+                      className={`transition-transform duration-300 ${
+                        expandedTiers["HOSTING"] ? "rotate-180" : "group-hover:translate-y-0.5"
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
 
               {/* Right: What's Included in Hosting & Maintenance */}
               <div className="lg:col-span-7 lg:pl-8 lg:border-l border-border/70 flex flex-col justify-between h-full">
-                <div>
+                <div className="hidden lg:block">
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-foreground mb-5">
                     What&apos;s included
                   </p>
@@ -620,14 +690,14 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="mt-2 lg:mt-8 pt-6 border-t border-border/60 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <p className="text-xs sm:text-sm text-muted">
                     Available for any website I build or existing WordPress sites needing a reliable
                     care plan.
                   </p>
                   <a
                     href="#contact"
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-border hover:border-primary hover:text-primary text-foreground font-bold text-sm transition-all shrink-0"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-stone-100 dark:bg-stone-900 border border-border hover:bg-primary active:bg-primary hover:border-primary hover:text-white dark:hover:text-stone-950 text-foreground font-bold text-sm transition-all shrink-0"
                   >
                     <span>Inquire About Maintenance</span>
                     <ArrowRight size={16} />
@@ -640,7 +710,7 @@ export default function Home() {
       </section>
 
       {/* Portfolio / My Work Section */}
-      <section id="projects" className="py-24 lg:py-32 border-t border-border/60 bg-stone-100/60 dark:bg-stone-950/40">
+      <section id="projects" className="py-24 lg:py-32 border-t border-border/60 bg-stone-100/60 dark:bg-stone-950/40 overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-8">
             <SectionHeader
@@ -698,13 +768,13 @@ export default function Home() {
       </section>
 
       {/* About Section (Founder & Personal Approach) */}
-      <section id="about" className="py-24 lg:py-32 border-t border-border/60 bg-stone-100/60 dark:bg-stone-950/40">
+      <section id="about" className="py-24 lg:py-32 border-t border-border/60 bg-stone-100/60 dark:bg-stone-950/40 overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <SectionHeader title="Meet Alexis — Your Designer & Developer" />
 
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16 mt-14 items-center">
-              <div className="lg:col-span-3 space-y-6 text-lg text-secondary leading-relaxed">
+              <div className="order-2 lg:order-1 lg:col-span-3 space-y-6 text-lg text-secondary leading-relaxed">
                 <p>
                   Hi, I&apos;m <span className="text-foreground font-bold">Alexis Baranauskas</span>
                   , a freelance web designer and full-stack developer based in Litchfield County,
@@ -768,7 +838,7 @@ export default function Home() {
                   pride in working directly with my clients to bring their vision to life.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="hidden lg:grid lg:grid-cols-2 gap-4 pt-2">
                   {[
                     "Independently owned — no big-agency overhead",
                     "Direct 1-on-1 communication with me from start to finish",
@@ -786,7 +856,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="lg:col-span-2">
+              <div className="order-1 lg:order-2 lg:col-span-2">
                 <a
                   href="mailto:lexi.codes.dev@gmail.com"
                   className="block w-full cursor-pointer focus:outline-none"

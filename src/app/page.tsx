@@ -26,6 +26,10 @@ import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ProjectCarousel from "@/components/ui/ProjectCarousel";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
+import PackageBuilderModal, {
+  PackageBuilderFields,
+  compilePackageMessage,
+} from "@/components/ui/PackageBuilderModal";
 import { Vortex } from "@/components/ui/vortex";
 import { projects } from "@/data/projects";
 
@@ -63,7 +67,7 @@ const serviceTiers = [
     description:
       "Perfect for small and local businesses looking for a clean, modern, professional online presence.",
     features: [
-      "Up to 5 custom-designed pages",
+      "5–10 custom-designed pages",
       "Fully mobile-responsive design",
       "Basic on-page SEO setup",
       "Social media links and integration",
@@ -84,7 +88,7 @@ const serviceTiers = [
     description:
       "Designed for growing businesses that need more flexibility, content management, and advanced functionality.",
     features: [
-      "Up to 10 custom-designed pages",
+      "Up to 15 custom-designed pages",
       "Everything included in Starter",
       "CMS integration for easy content updates",
       "Enhanced on-page SEO setup",
@@ -167,6 +171,10 @@ export default function Home() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null as string | null);
   const [expandedTiers, setExpandedTiers] = useState<Record<string, boolean>>({});
+  const [isPackageModalOpen, setIsPackageModalOpen] = useState(false);
+  const [selectedServiceType, setSelectedServiceType] = useState(
+    "Website Design & Development"
+  );
 
   const toggleTier = (tierKey: string) => {
     setExpandedTiers((prev) => ({ ...prev, [tierKey]: !prev[tierKey] }));
@@ -570,6 +578,38 @@ export default function Home() {
             })}
           </div>
 
+          {/* Build Your Own Package Callout */}
+          <div className="max-w-7xl mx-auto mt-12 rounded-[2.5rem] bg-gradient-to-br from-white via-purple-50/40 to-stone-100 dark:from-stone-950 dark:via-[#1c1235]/60 dark:to-card border border-primary/25 p-8 sm:p-10 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <h3 className="text-2xl sm:text-3xl font-bold font-outfit text-foreground">
+                Build Your Own Package ✨
+              </h3>
+              <p className="text-foreground text-base sm:text-lg font-semibold">
+                Don&apos;t see a package that fits your needs? Every business is different, and your
+                website should be too!
+              </p>
+              <p className="text-secondary text-sm sm:text-base leading-relaxed">
+                Let&apos;s schedule a free chat to discuss your goals, the features you&apos;re
+                looking for, and your budget. Together, we&apos;ll create a custom website package
+                that works for your business.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsPackageModalOpen(true)}
+              className="shrink-0 w-full md:w-auto inline-flex items-center justify-center gap-2.5 py-4 px-7 rounded-2xl font-bold text-base bg-primary text-white dark:text-stone-950 hover:bg-violet-700 dark:hover:bg-violet-600 hover:text-white dark:hover:text-white active:bg-violet-700 shadow-xl shadow-primary/20 transition-all duration-300 cursor-pointer"
+            >
+              <span>Let&apos;s Build Your Package</span>
+              <ArrowRight size={18} />
+            </button>
+          </div>
+
+          <PackageBuilderModal
+            isOpen={isPackageModalOpen}
+            onClose={() => setIsPackageModalOpen(false)}
+          />
+
           {/* Website Hosting & Maintenance + Additional Website Work */}
           <div className="max-w-7xl mx-auto mt-12 rounded-[2.5rem] bg-card border border-border p-8 sm:p-12 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -873,7 +913,7 @@ export default function Home() {
                         <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full border-2 border-dashed border-primary/40 p-3 flex items-center justify-center mb-6">
                           <div className="w-full h-full rounded-full overflow-hidden bg-stone-200 dark:bg-stone-800 shadow-inner">
                             <img
-                              src="/profile.png"
+                              src="/profile.jpg"
                               alt="Alexis Baranauskas — Freelance Web Designer and Developer in Litchfield County, Connecticut"
                               loading="lazy"
                               decoding="async"
@@ -986,13 +1026,17 @@ export default function Home() {
 
                     try {
                       const formData = new FormData(formElement);
+                      const serviceType =
+                        (formData.get("serviceType") as string) || "General Inquiry";
                       const payload = {
                         name: (formData.get("name") as string) || "",
                         email: (formData.get("email") as string) || "",
                         business: (formData.get("business") as string) || "",
-                        serviceType:
-                          (formData.get("serviceType") as string) || "General Inquiry",
-                        message: (formData.get("message") as string) || "",
+                        serviceType,
+                        message:
+                          serviceType === "Build Your Own Package"
+                            ? compilePackageMessage(formData)
+                            : (formData.get("message") as string) || "",
                         _gotcha: (formData.get("_gotcha") as string) || "",
                       };
 
@@ -1105,14 +1149,18 @@ export default function Home() {
                       <select
                         name="serviceType"
                         disabled={isSubmitting}
+                        value={selectedServiceType}
+                        onChange={(e) => setSelectedServiceType(e.target.value)}
                         className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base text-foreground disabled:opacity-60"
-                        defaultValue="Website Design & Development"
                       >
                         <option value="Website Design & Development">
                           Website Design &amp; Development
                         </option>
                         <option value="Website Hosting & Maintenance">
                           Website Hosting &amp; Maintenance
+                        </option>
+                        <option value="Build Your Own Package">
+                          Build Your Own Package ✨
                         </option>
                         <option value="Not Sure Yet — Let's Talk!">
                           Not Sure Yet — Let&apos;s Talk!
@@ -1121,21 +1169,25 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
-                      Tell Me About Your Project *
-                    </label>
-                    <textarea
-                      required
-                      name="message"
-                      rows={4}
-                      minLength={5}
-                      maxLength={5000}
-                      disabled={isSubmitting}
-                      className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
-                      placeholder="What does your business do, and what would you love your new or refreshed website to accomplish?"
-                    />
-                  </div>
+                  {selectedServiceType === "Build Your Own Package" ? (
+                    <PackageBuilderFields disabled={isSubmitting} />
+                  ) : (
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-muted uppercase tracking-widest ml-1">
+                        Tell Me About Your Project *
+                      </label>
+                      <textarea
+                        required
+                        name="message"
+                        rows={4}
+                        minLength={5}
+                        maxLength={5000}
+                        disabled={isSubmitting}
+                        className="w-full bg-white dark:bg-stone-950 border border-border rounded-xl px-4 md:px-5 py-3.5 focus:outline-none focus:border-primary transition-colors font-medium text-base resize-none text-foreground disabled:opacity-60"
+                        placeholder="What does your business do, and what would you love your new or refreshed website to accomplish?"
+                      />
+                    </div>
+                  )}
 
                   <button
                     type="submit"
@@ -1149,7 +1201,11 @@ export default function Home() {
                         <Send
                           className="w-4 h-4 md:w-[18px] md:h-[18px] shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
                         />
-                        <span>Send Message &amp; Request Free Quote</span>
+                        <span>
+                          {selectedServiceType === "Build Your Own Package"
+                            ? "Send Custom Package Request"
+                            : "Send Message & Request Free Quote"}
+                        </span>
                       </>
                     )}
                   </button>

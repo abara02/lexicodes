@@ -76,9 +76,8 @@ export default function Navigation() {
           </div>
         </div>
 
-        {/* Mobile Controls (Theme Toggle + Hamburger Button) */}
-        <div className="flex items-center gap-2.5 lg:hidden">
-          <ThemeToggle />
+        {/* Mobile Hamburger Button */}
+        <div className="flex items-center lg:hidden">
           <button
             className="text-foreground hover:text-primary transition-colors p-2"
             onClick={() => setIsOpen(!isOpen)}
@@ -88,6 +87,15 @@ export default function Navigation() {
           </button>
         </div>
       </div>
+
+      {/* Mobile-only Theme Toggle centered just under the main bar (only at top of page) */}
+      {!isOpen && !scrolled && (
+        <div className="lg:hidden absolute left-0 right-0 top-full flex justify-center pt-2.5 pointer-events-none">
+          <div className="pointer-events-auto">
+            <ThemeToggle />
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
